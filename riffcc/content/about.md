@@ -5,26 +5,24 @@ draft = false
 +++
 ## Building Libraries That Last
 
-Riff.CC is a platform dedicated to creating cooperative, unstoppable libraries and platforms that are owned and operated by the users themselves.
-
-We believe in the power of community-driven infrastructure that cannot be shut down, censored, or controlled by any single entity.
+Riff.CC is a project dedicated to creating cooperative, unstoppable libraries and platforms that are owned and operated by the users themselves.
 
 ## Our Mission
 
 We're building the future of digital libraries and creative platforms through:
 
-- **Decentralized Infrastructure**: Using IPFS and other distributed technologies to ensure content remains accessible forever
+- **Decentralized Infrastructure**: Using Codex, IPFS and other distributed technologies to ensure content remains accessible forever
 - **Community Ownership**: Platforms owned and governed by their users, not corporations
 - **Open Source**: All our tools and platforms are open source and freely available
 - **Preservation**: Ensuring that human knowledge and creativity are preserved for future generations
 
 ## What We Do
 
-### Libraries That Can't Be Stopped
+### We Build Libraries
 
 We create resilient digital libraries that exist across thousands of nodes worldwide. When you add content to a Riff.CC library, it becomes part of a permanent, uncensorable record of human creativity and knowledge.
 
-### Platforms By The Users, For The Users
+### By The Users, For The Users
 
 Every platform we build is designed with community governance in mind. Users aren't just consumers—they're owners with a real say in how the platform operates and evolves.
 

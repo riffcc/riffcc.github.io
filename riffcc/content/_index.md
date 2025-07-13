@@ -22,7 +22,7 @@ title = ''
       margin: 0; 
       font-family: 'Inter', sans-serif;
       font-weight: 700; 
-      font-size: 2.8rem;
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
       color: white !important;
       text-shadow: 
         0 0 40px rgba(0, 0, 0, 0.9),
