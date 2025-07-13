@@ -6,7 +6,7 @@ title = ''
 
 <section style="position: relative; display: inline-block; width: 100%;">
   <!-- Background image -->
-  <img src="/images/rip-a-remix-manifesto.png" alt="Banner" style="width: 100%; height: auto; display: block;" />
+  <img src="/images/banner.webp" alt="Banner" style="width: 100%; height: auto; display: block;" />
 
   <!-- Text overlay with subtle effects -->
   <div style="
