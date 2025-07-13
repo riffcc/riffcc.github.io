@@ -31,7 +31,7 @@ title = ''
         0 2px 8px rgba(0, 0, 0, 0.8),
         0 4px 12px rgba(0, 0, 0, 0.6),
         0 -1px 2px rgba(255, 255, 255, 0.2);
-    ">Building unstoppable,<br />
+    ">Build unstoppable,<br />
     cooperative libraries<br />
     and platforms.</h1>
   <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
