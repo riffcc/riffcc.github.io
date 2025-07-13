@@ -1,37 +1,517 @@
-<html>
-    <head>
-        <style>
-            @import url('https://rsms.me/inter/inter.css');
-            html { font-family: 'Inter', sans-serif; }
-            @supports (font-variation-settings: normal) {
-            html { font-family: 'Inter var', sans-serif; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flagship - Media Made Scalable</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
+        
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            page-break-after: always;
+        }
+        
+        .page-content {
+            padding: 60px;
+        }
+        
+        /* Header Styles */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #6366f1;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #6366f1;
+            letter-spacing: -1px;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 16px;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 20px;
+            color: #475569;
+            font-weight: 400;
+        }
+        
+        .highlight {
+            color: #6366f1;
+        }
+        
+        /* Value Proposition */
+        .value-prop {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+        
+        .value-prop p {
+            font-size: 18px;
+            color: #334155;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .feature {
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: #6366f1;
+        }
+        
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        
+        .feature h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .feature p {
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.6;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+        
+        .section-header p {
+            font-size: 18px;
+            color: #64748b;
+        }
+        
+        /* Target Audience */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        
+        .audience-card {
+            text-align: center;
+            padding: 24px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .audience-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-2px);
+        }
+        
+        .audience-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .audience-card p {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            background: #f8fafc;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 50px;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 12px;
+        }
+        
+        .step h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .step p {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        /* Why Different */
+        .why-different {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 50px;
+        }
+        
+        .why-different h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        .why-points {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .why-point {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+        
+        .why-point .icon {
+            font-size: 20px;
+            margin-top: 2px;
+        }
+        
+        .why-point p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 50px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #6366f1;
+            border: 2px solid #6366f1;
+        }
+        
+        .btn-secondary:hover {
+            background: #f3f4ff;
+        }
+        
+        .contact-info {
+            font-size: 16px;
+            color: #64748b;
+        }
+        
+        @media print {
+            .page {
+                box-shadow: none;
+                page-break-after: always;
             }
-            body { background-color: #121212; }
-            a { 
-                color: #6a6a6a;
-                text-decoration: none; /* no underline */
-            }
-            .box { 
-                color: #6a6a6a;
-                font: 22px Inter;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1 -->
+    <div class="page">
+        <div class="page-content">
+            <div class="header">
+                <div>
+                    <div class="logo">Flagship</div>
+                    <div class="tagline">Media Made Scalable</div>
+                </div>
+            </div>
+            
+            <div class="hero">
+                <h1>Build Libraries, <span class="highlight">Not Sandcastles</span></h1>
+                <p class="subtitle">Stand the test of time with Libraries that Last.</p>
+            </div>
+            
+            <div class="value-prop">
+                <p>Flagship is a revolutionary content platform that transforms how you share, showcase, and preserve your videos, images, and digital assets. With decentralised technology at its core, your content <b>becomes faster and more resilient as your audience grows</b>, not slower.</p>
+            </div>
+            
+            <div class="section-header">
+                <h2>Key Features</h2>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Media, Big and Small</h3>
+                    <p>Optimised for video and image workflows with lightning-fast load and scrub times, even for large files.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🧲</div>
+                    <h3>Instant Content Mirroring</h3>
+                    <p>Collaborate seamlessly by mirroring content from other Lenses. Perfect for teams and cross-promotion.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Blazing Fast Performance</h3>
+                    <p>Experience faster load times that actually improve as more people access your content. No more database bottlenecks.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Fully Customisable</h3>
+                    <p>Create a branded experience with customisable home pages, featured content sections, and layouts that match your style.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Resilient</h3>
+                    <p>Decentralised hosting means no single point of failure. Your content stays online even if servers go down.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Business Ready</h3>
+                    <p>Tailored solutions for enterprises with optional encryption, private IPFS, and custom integrations.</p>
+                </div>
+            </div>
 
-        </style>
-    </head>
-    <body>
-        <div class="box">
-        <p>The Library shall not fall again<a href="https://time.com/5912689/library-of-alexandria-burning/">.</a></p>
+            <div class="value-prop">
+                <p></p>
+            </div>            
         </div>
-        <div class="box">
-        <p><img src="logo-white.svg" height="200px" width="200px" alt="pioneer" /></p>
+    </div>
+    
+    <!-- Page 2 -->
+    <div class="page">
+        <div class="page-content">
+            <div class="section-header">
+                <h2>Who Uses Flagship?</h2>
+                <p>Trusted by creatives, teams, and innovators worldwide</p>
+            </div>
+            
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <h4>Creative Professionals</h4>
+                    <p>Musicians, filmmakers, photographers and artists who need speed and control</p>
+                </div>
+                <div class="audience-card">
+                    <h4>Media Teams</h4>
+                    <p>Share edits, collaborate globally, and publish with confidence</p>
+                </div>
+                <div class="audience-card">
+                    <h4>Journalists</h4>
+                    <p>Build trusted media libraries for sensitive reporting</p>
+                </div>
+                <div class="audience-card">
+                    <h4>Home Labbers</h4>
+                    <p>Self-host and decentralise without compromising access</p>
+                </div>
+                <div class="audience-card">
+                    <h4>Enterprises</h4>
+                    <p>Distribute secure content to clients and partners</p>
+                </div>
+                <div class="audience-card">
+                    <h4>Content Creators</h4>
+                    <p>Build your brand with a professional media presence</p>
+                </div>
+            </div>
+            
+            <div class="how-it-works">
+                <h3 style="text-align: center; font-size: 28px; margin-bottom: 12px;">How It Works</h3>
+                <p style="text-align: center; color: #64748b; margin-bottom: 30px;">Simple to use, powerful under the hood</p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Upload to Your Lens</h4>
+                        <p>Your personalised library and public presence</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Many Hands Make Light Work</h4>
+                        <p>When others access your site, they help serve it too</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Performance Scales</h4>
+                        <p>Speed and reliability increase with popularity</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Always Accessible</h4>
+                        <p>Distributed hosting ensures 24/7 availability</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="why-different">
+                <h3>Why Flagship Stands Out</h3>
+                <div class="why-points">
+                    <div class="why-point">
+                        <span class="icon">✓</span>
+                        <p><strong>No Vendor Lock-In:</strong> Your content is distributed across a network, not trapped on one platform</p>
+                    </div>
+                    <div class="why-point">
+                        <span class="icon">✓</span>
+                        <p><strong>Performance at Scale:</strong> More views = faster loading and higher resilience</p>
+                    </div>
+                    <div class="why-point">
+                        <span class="icon">✓</span>
+                        <p><strong>True Ownership:</strong> You control your content, your data, and your audience</p>
+                    </div>
+                    <div class="why-point">
+                        <span class="icon">✓</span>
+                        <p><strong>Future-Proof:</strong> Built on decentralised technology that evolves with the web</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta">
+                <h2>Ready to Transform Your Media Workflow?</h2>
+                <p>Join creators and teams already building on Flagship</p>
+                
+                <div class="cta-buttons">
+                    <a href="https://github.com/riffcc/" class="btn btn-primary">Get the Code</a>
+                    <a href="mailto:hello@riff.cc" class="btn btn-secondary">Build With Us</a>
+                </div>
+                
+                <div class="contact-info">
+                    <p><strong>Visit:</strong> <a href="https://riff.cc">https://riff.cc</a> | <strong>Email:</strong> <a href="mailto:hello@riff.cc">hello@riff.cc</a></p>
+                </div>
+            </div>
         </div>
-        <!--
-            we are the music makers
-            and we are the dreamers of dreams.
-        -->
-    </body>
+    </div>
+</body>
 </html>
