@@ -3,43 +3,28 @@ title = 'About Riff.CC'
 date = 2025-01-13T12:00:00Z
 draft = false
 +++
-## Building Libraries That Last
 
-Riff.CC is a project dedicated to creating cooperative, unstoppable libraries and platforms that are owned and operated by the users themselves.
+*"e cinere surgemus" (out of ash, rise)*
 
-## Our Mission
+Riff.CC is building tools and platforms to empower users to create and share digital content in permanent, resilient digital spaces called Lenses.
 
-We're building the future of digital libraries and creative platforms through:
+## What's a Lens?
+A Lens is a decentralized, self-hosted digital space - your personal view of the world - containing media, tools, and content you can share or collaborate on. Lenses can follow others to sync content instantly, enabling seamless, permissionless collaboration.
 
-- **Decentralized Infrastructure**: Using Codex, IPFS and other distributed technologies to ensure content remains accessible forever
-- **Community Ownership**: Platforms owned and governed by their users, not corporations
-- **Open Source**: All our tools and platforms are open source and freely available
-- **Preservation**: Ensuring that human knowledge and creativity are preserved for future generations
+Private sharing is also planned, letting you control who can follow and access your Lens.
 
-## What We Do
+You can learn how to setup a Lens in our [documentation](/docs).
 
-### We Build Libraries
+## Join us
 
-We create resilient digital libraries that exist across thousands of nodes worldwide. When you add content to a Riff.CC library, it becomes part of a permanent, uncensorable record of human creativity and knowledge.
+Whether you're a developer, creator, librarian, or simply someone who believes in a free and open internet, you can help us build the future of free and libre content.
 
-### By The Users, For The Users
+You can [join our Community](/contact), check out our [docs](/docs) or read our code [Contribute](https://github.com/riffcc)
 
-Every platform we build is designed with community governance in mind. Users aren't just consumers—they're owners with a real say in how the platform operates and evolves.
+## Build with us
+<p>If you want to learn how you could use Riff.CC's Lens SDK and Flagship technologies to build your own
+applications - whether enterprise, open source, or personal - or what we could build for you,</p>
 
-### Tools for Creators
+please reach out to us at [team@riff.cc](mailto:team@riff.cc) and we'll meet with you to discuss your needs and how we can help.
 
-We provide the tools and infrastructure that creators need to share their work freely, maintain control over their content, and connect directly with their audience without intermediaries.
-
-## Our Values
-
-- **Freedom**: Information wants to be free, and we're here to help it
-- **Cooperation**: Together we're stronger than any corporation
-- **Resilience**: Building systems that can withstand any attempt at control or censorship
-- **Accessibility**: Knowledge and creativity should be available to everyone, everywhere
-- **Sustainability**: Creating systems that can maintain themselves through community support
-
-## Join Us
-
-Whether you're a developer, creator, librarian, or simply someone who believes in a free and open internet, there's a place for you in the Riff.CC community. Together, we're building the unstoppable libraries and platforms of tomorrow.
-
-[Get Started](/docs) | [Join the Community](/contact) | [Contribute](https://github.com/riffcc)
+Whether you build applications yourself or want us to build them with you, we can help you customise the Lens SDK to suit just about any use case.

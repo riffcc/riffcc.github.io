@@ -1,5 +1,4 @@
 +++
-date = '2025-07-07T15:36:49+01:00'
 draft = false
 title = ''
 +++
@@ -79,7 +78,6 @@ title = ''
 <div style="display: flex; align-items: center; gap: 3rem; margin: 3rem 0;">
   <div style="flex: 1;">
     <h1>Libraries, not sandcastles.</h1>
-    <p>They are the repositories of knowledge, culture and history. They are our collective memory.</p>
     <p>We're building permanent Libraries - decentralized, community owned, and designed to outlast their creators.</p>
     <p>Create a Lens, and build a Library.</p>
   </div>

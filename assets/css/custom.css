@@ -1,6 +1,7 @@
 /* Inter font configuration */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+
 /* Override default font settings */
 :root {
   --hx-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -118,4 +119,30 @@ footer {
 /* Preserve monospace fonts for code */
 code *, pre *, .font-mono * {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+}
+
+/* Light mode SVG - hidden in dark mode */  
+.light-svg {  
+  display: block;  
+}  
+.dark .light-svg {  
+  display: none;  
+}  
+  
+/* Dark mode SVG - hidden in light mode */  
+.dark-svg {  
+  display: none;  
+}  
+.dark .dark-svg {  
+  display: block;  
+}
+
+/* Hide step numbers in timeline/steps components */
+.steps {  
+  counter-reset: none !important;  
+}  
+  
+.steps h3::before {  
+  content: "" !important;  
+  counter-increment: none !important;  
 }
