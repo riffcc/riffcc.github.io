@@ -9,8 +9,8 @@ params:
     logo:
       path: images/logo.svg
       dark: images/logo-dark.svg
-      width: 50
-      height: 50
+      width: 60
+      height: 60
       link: /
     width: wide
   page:  

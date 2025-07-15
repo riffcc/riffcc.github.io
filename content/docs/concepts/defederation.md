@@ -11,8 +11,8 @@ It allows Lenses to follow each other, instantly replicating all of their conten
 ## Examples
 Site D might build its library by following site B (and site C by extension). Site D can also have content of its own.
 
-<img src="/images/docs/concepts/defederation.svg" class="light-svg" alt="A diagram showing the architecture of Flagship" />
-<img src="/images/docs/concepts/defederation-dark.svg" class="dark-svg" alt="A diagram showing the architecture of Flagship" />
+<img src="/images/docs/concepts/defederation.webp" class="light-webp" alt="A diagram showing the architecture of Flagship" />
+<img src="/images/docs/concepts/defederation-dark.webp" class="dark-webp" alt="A diagram showing the architecture of Flagship" />
 
 In this example, Site D would have 9 pieces of content, and they would all be displayed in a unified experience - as though they were all part of the same library.
 

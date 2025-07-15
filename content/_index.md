@@ -78,7 +78,8 @@ title = ''
 <div style="display: flex; align-items: center; gap: 3rem; margin: 3rem 0;">
   <div style="flex: 1;">
     <h1>Libraries, not sandcastles.</h1>
-    <p>We're building permanent Libraries - decentralized, community owned, and designed to outlast their creators.</p>
+    <p>Traditional libraries are like sandcastles - built for a purpose, and then washed away by the tide.</p>
+    <p>We're building permanent Libraries - decentralized, sustainable, and designed to outlast their creators.</p>
     <p>Create a Lens, and build a Library.</p>
   </div>
   <div style="flex: 0 0 auto;">

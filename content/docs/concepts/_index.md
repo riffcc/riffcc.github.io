@@ -1,8 +1,10 @@
-+++
-draft = false
-title = 'Concepts'
-weight = 1
-+++
+---
+draft: false
+title: 'Concepts'
+weight: 1
+sidebar:
+    open: true
+---
 
 Riff.CC is built around several key concepts that define how it operates and interacts with users. These concepts form the foundation of our decentralized streaming service and cooperative library model.
 
@@ -11,6 +13,8 @@ You can read more about specific concepts in the dedicated pages for each.
 ## Creative Commons
 
 Riff.CC focuses on legally free media content, primarily licensed under Creative Commons. This allows users to share, remix, and build upon existing works while respecting the rights of creators. We also host public domain content, ensuring a wide range of accessible media.
+
+You can read more about the Creative Commons organisation (who created the CC licences) at their website, [creativecommons.org](https://creativecommons.org/).
 
 ## [Lenses](/docs/concepts/lenses/)
 

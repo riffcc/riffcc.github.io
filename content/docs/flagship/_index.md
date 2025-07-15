@@ -1,9 +1,11 @@
-+++
-date = '2025-07-07T15:37:53+01:00'
-draft = false
-title = 'Flagship'
-weight = 5
-+++
+---
+date: '2025-07-07T15:37:53+01:00'
+draft: false
+title: 'Flagship'
+weight: 5
+sidebar:
+    open: true
+---
 
 Flagship is our decentralized library platform that allows communities to build and maintain their own unstoppable digital libraries.
 

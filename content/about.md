@@ -19,7 +19,7 @@ You can learn how to setup a Lens in our [documentation](/docs).
 
 Whether you're a developer, creator, librarian, or simply someone who believes in a free and open internet, you can help us build the future of free and libre content.
 
-You can [join our Community](/contact), check out our [docs](/docs) or read our code [Contribute](https://github.com/riffcc)
+You can [join our community](https://discord.gg/cvYgQSfCrQ), check out our [docs](/docs) or read our [code](https://github.com/riffcc)
 
 ## Build with us
 <p>If you want to learn how you could use Riff.CC's Lens SDK and Flagship technologies to build your own

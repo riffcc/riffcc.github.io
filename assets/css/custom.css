@@ -127,7 +127,14 @@ code *, pre *, .font-mono * {
 }  
 .dark .light-svg {  
   display: none;  
-}  
+}
+
+.light-webp {
+  display: block;
+}
+.dark .light-webp {
+  display: none;
+}
   
 /* Dark mode SVG - hidden in light mode */  
 .dark-svg {  
@@ -135,6 +142,13 @@ code *, pre *, .font-mono * {
 }  
 .dark .dark-svg {  
   display: block;  
+}
+
+.dark-webp {
+  display: none;
+}
+.dark .dark-webp {
+  display: block;
 }
 
 /* Hide step numbers in timeline/steps components */
