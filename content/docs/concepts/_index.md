@@ -12,7 +12,7 @@ You can read more about specific concepts in the dedicated pages for each.
 
 Riff.CC focuses on legally free media content, primarily licensed under Creative Commons. This allows users to share, remix, and build upon existing works while respecting the rights of creators. We also host public domain content, ensuring a wide range of accessible media.
 
-## Lenses
+## [Lenses](/docs/concepts/lenses/)
 
 A Lens is an individual instance of Flagship that acts as both a library and a gateway to the broader network. Each Lens can:
 
@@ -21,7 +21,9 @@ A Lens is an individual instance of Flagship that acts as both a library and a g
 - Participate in the federation network
 - Operate independently if needed
 
-## Decentralized Federation (Defederation)
+Read more about Lenses and how to create your own on the [Lenses](/docs/concepts/lenses/) page.
+
+## [Decentralized Federation (Defederation)](/docs/concepts/defederation/)
 
 Unlike traditional centralized platforms, Flagship uses a federation model where:
 
@@ -30,4 +32,4 @@ Unlike traditional centralized platforms, Flagship uses a federation model where
 - Each Lens maintains autonomy while sharing resources
 - The network becomes stronger with each new participant
 
-We call this Defederation, as it's de-federated by default, 
+We call this Defederation, as Lenses have to explicitly opt in to federate with each other. Read more about it on the [Defederation](/docs/concepts/defederation/) page.
