@@ -34,7 +34,7 @@ title = ''
     cooperative libraries<br />
     and platforms.</h1>
   <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
-    <a href="/docs" style="
+    <a href="https://ftwc.xyz" style="
       display: inline-block;
       padding: 0.75rem 2rem;
       background-color: rgb(12, 21, 61);
@@ -53,7 +53,7 @@ title = ''
         0 4px 12px rgba(0, 0, 0, 0.6),
         0 -1px 2px rgba(255, 255, 255, 0.2);
     " onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)'" onmouseout="this.style.backgroundColor='transparent'">Explore Riff.CC</a>
-    <a href="https://ftwc.xyz" style="
+    <a href="/docs/riff.cc/create-lens.md" style="
       display: inline-block;
       padding: 0.75rem 2rem;
       background-color:rgb(68, 0, 80);

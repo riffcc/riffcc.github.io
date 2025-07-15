@@ -1,3 +1,4 @@
+---
 params:
   description: 'Riff.CC is a platform for creativity. Build Libraries that Last.'
   footer:
@@ -12,6 +13,8 @@ params:
       height: 50
       link: /
     width: wide
+  page:  
+    width: full  # or "full" for maximum width
 
 markup:
   goldmark:

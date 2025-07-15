@@ -1,8 +1,8 @@
 +++
 date = '2025-07-07T15:37:53+01:00'
 draft = false
-title = 'Riff.CC'
-weight = 1
+title = 'Create a Lens'
+weight = 2
 +++
 
 We provide a streaming service called Riff.CC that allows users to watch, share, and curate legally free media content.

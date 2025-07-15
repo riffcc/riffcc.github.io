@@ -2,7 +2,7 @@
 date = '2025-07-07T15:37:53+01:00'
 draft = false
 title = 'Roadmap'
-weight = 1
+weight = 2
 +++
 
 Here's what's coming up for Riff.CC:

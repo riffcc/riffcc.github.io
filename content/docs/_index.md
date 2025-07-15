@@ -1,8 +1,12 @@
 +++
 date = '2025-07-07T15:37:53+01:00'
 draft = false
-title = 'Docs'
+title = 'Riff.CC'
+weight = 1
 +++
 
-Welcome to our documentation! Here you'll find everything you need to get started with Riff.CC, from setting up your own Lens to contributing to our projects.
+We provide a streaming service called Riff.CC that allows users to watch, share, and curate legally free media content.
 
+Our platform is built on decentralized principles, ensuring that content remains accessible and resilient against censorship.
+
+It is the first unstoppable library, allowing anyone to mirror their own library from ours, and share it with others. You can learn more about unstoppable libraries by reading about [Flagship](/docs/flagship).
