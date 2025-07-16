@@ -75,15 +75,15 @@ title = ''
   </div>
 </section>
 
-<div style="display: flex; align-items: center; gap: 3rem; margin: 3rem 0;">
-  <div style="flex: 1;">
+<div style="display: flex; align-items: center; gap: clamp(1rem, 5vw, 3rem); margin: 3rem 0;">
+  <div style="flex: 1 1 0; min-width: 0;">
     <h1>Libraries, not sandcastles.</h1>
     <p>Traditional libraries are like sandcastles - built for a purpose, and then washed away by the tide.</p>
     <p>We're building permanent Libraries - decentralized, sustainable, and designed to outlast their creators.</p>
     <p>Create a Lens, and build a Library.</p>
   </div>
-  <div style="flex: 0 0 auto;">
-    <img src="/images/riff.png" alt="Durable" style="width: 200px; height: auto;" />
+  <div style="flex: 0 0 auto; text-align: center;">
+    <img src="/images/riff.png" alt="A screenshot of the Riff.CC website" style="width: min(200px, 21vw); height: auto; max-width: 100%;" />
   </div>
 </div>
 
