@@ -15,6 +15,4 @@ It is the first unstoppable library, allowing anyone to mirror their own library
 
 You can also run your own streaming service using our open source software, and even mirror our library into your own.
 
-## Visiting Riff.CC
-
-You can see the current development snapshot of Riff.CC at our development site, [ftwc.xyz](https://ftwc.xyz).
+Check out our [live development site](https://ftwc.xyz) to get a feel for what Riff.CC is all about.

@@ -43,9 +43,38 @@ menu:
       name: 'Contact us'
       url: /contact
       weight: 5
+    - name: Search
+      weight: 6
+      params:
+        type: search
+    - name: GitHub
+      weight: 7
+      url: "https://github.com/riffcc"
+      params:
+        icon: github
 
 baseURL: 'https://riffcc.github.io/'
-languageCode: 'en-us'
+languageCode: 'en-gb'
+languages:
+  en:
+    languageName: English
+    weight: 1
+    title: Riff.CC
+  fr:
+    languageName: Francais (Coming soon)
+    languageCode: fr
+    weight: 2
+    title: Riff.CC
+  es:
+    languageName: Español (Coming soon)
+    languageCode: es
+    weight: 3
+    title: Riff.CC
+  pt:
+    languageName: Português (Coming soon)
+    languageCode: pt
+    weight: 4
+    title: Riff.CC
 title: 'Riff.CC'
 enableGitInfo: true
 
