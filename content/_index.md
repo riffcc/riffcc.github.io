@@ -53,7 +53,7 @@ title = ''
         0 4px 12px rgba(0, 0, 0, 0.6),
         0 -1px 2px rgba(255, 255, 255, 0.2);
     " onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)'" onmouseout="this.style.backgroundColor='transparent'">Explore Riff.CC</a>
-    <a href="/docs/riff.cc/create-lens.md" style="
+    <a href="/docs/flagship/create-lens" style="
       display: inline-block;
       padding: 0.75rem 2rem;
       background-color:rgb(68, 0, 80);
