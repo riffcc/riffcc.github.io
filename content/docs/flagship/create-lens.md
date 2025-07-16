@@ -162,7 +162,7 @@ Do you approve? (y/N) · true
 
     We suggest running the node in a screen or tmux session, so that it keeps running in the background if you close the terminal.
 
-    Copy the `ws` listening address for later usage: `/ip4/127.0.0.1/tcp/8002/ws/p2p/12D3KooWAo2AC2Aga6gxon6Fd8jXMoxRtBkQrBBK3hsuQs3wtnNT`.
+    Copy the `ws` listening address for later usage - for example, `/ip4/127.0.0.1/tcp/8002/ws/p2p/12D3KooWAo2AC2Aga6gxon6Fd8jXMoxRtBkQrBBK3hsuQs3wtnNT`.
 
 ## Installing Flagship
 
