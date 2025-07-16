@@ -13,7 +13,7 @@ A Lens is a decentralized, self-hosted digital space - your personal view of the
 
 Private sharing is also planned, letting you control who can follow and access your Lens.
 
-You can learn how to setup a Lens in our [documentation](/docs).
+You can learn how to [setup a Lens](/docs/flagship/create-lens/) in our [documentation](/docs).
 
 ## Join us
 
