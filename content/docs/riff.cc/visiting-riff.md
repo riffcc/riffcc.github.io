@@ -6,6 +6,4 @@ weight = 1
 sidebar.open = true
 +++
 
-## Visiting Riff.CC
-
 You can see the current development snapshot of Riff.CC at our development site, [ftwc.xyz](https://ftwc.xyz).
