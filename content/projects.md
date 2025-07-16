@@ -19,9 +19,9 @@ Our decentralized library platform that allows communities to build and maintain
 
 A set of tools for managing and curating content in decentralized libraries, ensuring that knowledge is preserved and accessible.
 
-[Source code](https://github.com/riffcc/librarian) | [Documentation](/docs/librarian)
+[Source code](https://github.com/riffcc/librarian)
 
-**Status**: Active development
+**Status**: Active development, early prototype
 
 ## 🎁 Showcase
 
