@@ -30,6 +30,46 @@
         "streaming",
         "ipfs"
       ]
+    },
+    {
+      "guid": "lens-sdk",
+      "name": "Lens SDK",
+      "description": "The Lens SDK is a library for building Lenses using Peerbit and the Riff.CC software stack.",
+      "webpageUrl": {
+        "url": "https://riff.cc/docs/lens-sdk"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/riffcc/lens-sdk",
+        "wellKnown": "https://github.com/riffcc/lens-sdk/blob/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": [
+        "spdx:AGPL-3.0"
+      ],
+      "tags": [
+        "media",
+        "streaming",
+        "ipfs"
+      ]
+    },
+    {
+      "guid": "lens-node",
+      "name": "Lens Node",
+      "description": "The Lens Node is a CLI tool for building Lenses using Peerbit and the Riff.CC software stack.",
+      "webpageUrl": {
+        "url": "https://riff.cc/docs/lens-node"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/riffcc/lens-node",
+        "wellKnown": "https://github.com/riffcc/lens-node/blob/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": [
+        "spdx:AGPL-3.0"
+      ],
+      "tags": [
+        "media",
+        "streaming",
+        "ipfs"
+      ]
     }
   ],
   "funding": {
