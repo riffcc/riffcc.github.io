@@ -1,6 +1,6 @@
-# riff.cc
+# Riff.CC
+This is the source code for the Riff.CC landing page, currently living at https://riff.cc/
 
-e cinere surgemus
-
-## Contents
-* Site data for AFFiNE, Ghost
+## Credits
+* Initially designed by @Zorlin, building on lots of really great tech.
+* Powered by Hugo and the Hextra theme
