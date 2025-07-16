@@ -5,6 +5,7 @@
     "role": "owner",
     "name": "Riff.CC",
     "email": "team@riff.cc",
+    "phone": "",
     "description": "Riff.CC is building software for publishing content libraries that are decentralised, sustainable and censorship resistant.",
     "webpageUrl": {
       "url": "https://riff.cc"
@@ -16,7 +17,7 @@
       "name": "Flagship",
       "description": "Flagship is the frontend for Riff.CC Lenses - a vibrant media streaming platform for the world.",
       "webpageUrl": {
-        "url": "https://riff.cc/docs/flagship"
+        "url": "https://riff.cc/"
       },
       "repositoryUrl": {
         "url": "https://github.com/riffcc/flagship",
@@ -36,7 +37,7 @@
       "name": "Lens SDK",
       "description": "The Lens SDK is a library for building Lenses using Peerbit and the Riff.CC software stack.",
       "webpageUrl": {
-        "url": "https://riff.cc/docs/lens-sdk"
+        "url": "https://riff.cc/"
       },
       "repositoryUrl": {
         "url": "https://github.com/riffcc/lens-sdk",
@@ -56,7 +57,7 @@
       "name": "Lens Node",
       "description": "The Lens Node is a CLI tool for building Lenses using Peerbit and the Riff.CC software stack.",
       "webpageUrl": {
-        "url": "https://riff.cc/docs/lens-node"
+        "url": "https://riff.cc/"
       },
       "repositoryUrl": {
         "url": "https://github.com/riffcc/lens-node",
@@ -83,6 +84,7 @@
       {
         "guid": "bitcoin",
         "type": "cash",
+        "address": "",
         "description": "Please contact us if you want to donate via Bitcoin or other cryptocurrency."
       }
     ],
@@ -105,6 +107,7 @@
         "year": 2024,
         "income": 79684.84,
         "expenses": 78708.94,
+        "taxes": 0,
         "currency": "AUD",
         "description": "Almost all self-funded, with a couple of donations throughout the year."
       }
