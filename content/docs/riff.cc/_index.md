@@ -7,6 +7,9 @@ sidebar:
     open: true
 ---
 
+> Free the world's culture
+> for those who create.
+
 We provide a streaming service called Riff.CC that allows users to watch, share, and curate legally free media content.
 
 Our platform is built on decentralized principles, ensuring that content remains accessible and resilient against censorship.
