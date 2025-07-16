@@ -1,6 +1,6 @@
 +++
 title = 'Terms of Service'
-date = 2025-07-16T04:00:00Z
+date = 2025-07-16T03:00:00Z
 draft = false
 +++
 
