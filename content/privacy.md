@@ -30,7 +30,7 @@ You have the right to:
 - Request deletion of your data
 - Opt out of any communications
 
-## Contact
+## Contact us
 
 Questions about this privacy policy? Contact us at privacy@riff.cc.
 
