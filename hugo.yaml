@@ -53,7 +53,7 @@ menu:
       params:
         icon: github
 
-baseURL: 'https://riffcc.github.io/'
+baseURL: 'https://riff.cc/'
 languageCode: 'en-gb'
 languages:
   en:
