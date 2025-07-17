@@ -1,6 +1,6 @@
 +++
 draft = false
-title = 'Riff.CC - Build unstoppable, cooperative libraries and platforms'
+title = ''
 +++
 
 <section style="position: relative; display: inline-block; width: 100%;">
