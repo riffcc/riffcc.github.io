@@ -79,7 +79,46 @@ The `FederationManager` is designed to be efficient, but in large-scale networks
 * **Live Sync:** Live updates via pub/sub are extremely lightweight. A `FederationUpdate` message only contains the cryptographic hashes and metadata of changed entries, not the full data, making real-time updates very fast.
 * **Network Topology:** Federation performance is dependent on the underlying libp2p network. For optimal performance, ensure that nodes (especially those that frequently federate with each other) are well-connected. You can use `peerbit.dial()` to manually establish connections between nodes if needed.
 
-### 4. Direct Program Interaction (For Advanced Use Cases)
+### 4. Production-Level Content Moderation (`BlockedContent` and Denylists)
+
+The Lens SDK is designed with a powerful content moderation architecture that extends beyond simple in-app filtering to the core infrastructure. This section outlines the full vision, separating what is currently available from features that are in progress or planned for the future.
+
+#### Logical Deletes vs. Hard Deletes
+
+It is important to distinguish between the two forms of content removal:
+
+*   **`deleteRelease()` (Logical Delete):** This is a standard feature. When an administrator calls `deleteRelease()`, it removes the `Release` document from the site's database. This is a "soft" or "logical" delete within the application's view. The underlying data file on IPFS is not immediately affected.
+
+*   **`BlockedContent` (Hard Delete Foundation):** This schema is the foundation for a "hard delete" process. It is designed to create a permanent, verifiable record that a piece of content (identified by its CID) should be purged not just from the app, but from the entire storage infrastructure.
+
+#### The "Bad Bits" Moderation Pattern: Current State and Future Vision
+
+The recommended pattern for robust moderation follows the principles of established denylist formats like the ["Bad Bits" denylist](https://badbits.dwebops.pub/).
+
+Here is the workflow, including the status of each component:
+
+1.  **Administrator Action:** An administrator identifies a piece of content by its IPFS Content Identifier (CID) that needs to be blocked.
+
+2.  **Double Hashing and Record Creation (In Progress):**
+    *   **Functionality:** To protect privacy, the original CID is **double-hashed** (e.g., SHA256(SHA256(CID))) before being stored. This prevents casual observers from identifying the content on the blocklist.
+    *   **Status:** The high-level `LensService` methods to perform this action (e.g., `blockContent()`) are **currently in progress**. This will provide a simple, secure way for administrators to add entries to the `blockedContent` store without needing direct program interaction.
+
+3.  **Infrastructure Synchronization (Future Implementation):**
+    *   **Vision:** The long-term vision is for a trusted backend service or "Operator" to monitor the `Site`'s `blockedContent` store. This Operator will generate a standard denylist file from the stored hashes and distribute it to all core infrastructure.
+    *   **Status:** The implementation of this **Operator service is planned for the future**. When complete, it will enable the `blockedContent` store to act as a decentralized source of truth that can instruct IPFS nodes, clusters, and CDNs to refuse to serve and permanently delete blocked content.
+
+#### Summary of Moderation Features
+
+| Feature                                   | Status            | Description                                                                                             |
+|-------------------------------------------|-------------------|---------------------------------------------------------------------------------------------------------|
+| **Logical Deletion** (`deleteRelease`)      | ✅ **Implemented** | Removes content metadata from the `Site`'s database.                                                      |
+| **Blocklist Schema** (`BlockedContent`)   | ✅ **Implemented** | The on-chain data structure for recording moderation decisions exists.                                    |
+| **Service API for Blocking** (`blockContent`) | ⏳ **In Progress**  | High-level `LensService` methods for easy and secure management of the `blockedContent` store.          |
+| **Operator for Infrastructure Sync**        | 🗺️ **Future**       | A service to automate the syncing of the on-chain blocklist to IPFS nodes, clusters, and CDNs.        |
+
+This roadmap provides a clear path from the current capabilities to a comprehensive, end-to-end content moderation system that is both powerful and privacy-preserving.
+
+### 5. Direct Program Interaction (For Advanced Use Cases)
 
 While the `LensService` should be used for 99% of interactions, there may be rare cases where direct interaction with the `Site` program is necessary (e.g., in server-side administrative scripts).
 
