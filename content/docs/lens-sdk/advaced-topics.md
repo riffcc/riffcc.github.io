@@ -1,6 +1,6 @@
 +++
 date = '2025-07-22T12:25:02+02:00'
-draft = true
+draft = false
 title = 'Advaced Topics'
 weight = 3
 +++
