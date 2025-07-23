@@ -15,7 +15,7 @@ The `LensService` class provides a high-level, asynchronous interface for all SD
 
 ```typescript
 new LensService(options?: {
-  client?: ProgramClient;
+  peerbit?: ProgramClient;
   debug?: boolean;
   customPrefix?: string;
 })
@@ -28,7 +28,7 @@ Initializes a new instance of the service.
 | Parameter      | Type            | Optional | Description                                                                                             |
 |----------------|-----------------|:--------:|---------------------------------------------------------------------------------------------------------|
 | `options`      | `object`        | **Yes**  | Configuration for the service instance.                                                                 |
-| `options.client`| `ProgramClient` | **Yes**  | An externally managed Peerbit client. If provided, `init()` and `stop()` will not affect its lifecycle. |
+| `options.peerbit`| `ProgramClient` | **Yes**  | An externally managed Peerbit client. If provided, `init()` and `stop()` will not affect its lifecycle. |
 | `options.debug`| `boolean`       | **Yes**  | Enables verbose diagnostic logging to the console. Defaults to `false`.                                   |
 | `options.customPrefix`| `string` | **Yes**  | Sets a custom prefix for log messages. Defaults to `'[LensService]'`.                                     |
 
@@ -107,6 +107,15 @@ A `Promise` that resolves to an `AccountType` enum value.
 
 ---
 
+### API Input Types
+
+To simplify interactions, the `LensService` uses two primary input patterns for creating and editing documents.
+
+* `AddInput<T>`: Used for creating new documents (e.g., `addRelease`). You only need to provide the core data for the document type `T`. The `siteAddress` is always handled by the service. The `postedBy` field is optional; if omitted, it defaults to the service's current identity.
+* `EditInput<T>`: Used for updating existing documents (e.g., `editRelease`). This requires the full document data, including the `id` of the document to be updated, its `postedBy` key, and its `siteAddress`. The service will verify that `postedBy` and `siteAddress` have not been changed.
+
+---
+
 ## Content Management (Releases)
 
 Methods for creating and managing the primary content type, `Release`.
@@ -114,16 +123,16 @@ Methods for creating and managing the primary content type, `Release`.
 ### `addRelease()`
 
 ```typescript
-addRelease(data: Omit<ReleaseData, 'siteAddress'>): Promise<HashResponse>
+addRelease(data: AddInput<ReleaseData>): Promise<HashResponse>
 ```
 
-Creates and saves a new `Release` document. Automatically populates `id`, `postedBy`, and `siteAddress`.
+Creates and saves a new `Release` document. Automatically populates `id`, `siteAddress`, and `postedBy` (if not provided).
 
 #### Parameters
 
-| Parameter | Type          | Description                                                    |
-|-----------|---------------|----------------------------------------------------------------|
-| `data`    | `ReleaseData` | An object with the release properties (`name`, `categoryId`, etc.). |
+| Parameter | Type                | Description                                                                                             |
+|-----------|---------------------|---------------------------------------------------------------------------------------------------------|
+| `data`    | `AddInput<ReleaseData>` | An object with the release properties (`name`, `categoryId`, etc.). `postedBy` is optional. |
 
 #### Returns
 
@@ -132,8 +141,16 @@ A `Promise` resolving to a `HashResponse` object.
 ### `editRelease()`
 
 ```typescript
-editRelease(data: ReleaseData): Promise<HashResponse>
+editRelease(data: EditInput<ReleaseData>): Promise<HashResponse>
 ```
+
+Updates an existing Release. A `MEMBER` can edit their own releases. An `ADMIN` can edit any release on the Site.
+
+#### Parameters
+
+| Parameter | Type                | Description                                                                                                                               |
+|-----------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `data`    | `EditInput<ReleaseData>` | The full `Release` data, including the `id` of the document to update. The service will reject the edit if `postedBy` or `siteAddress` are modified. |
 
 Updates an existing `Release`. The `data` object must include the `id`. Requires `ADMIN` privileges.
 
@@ -170,7 +187,7 @@ Methods for managing `FeaturedRelease` entries. These operations require `ADMIN`
 ### `addFeaturedRelease()`
 
 ```typescript
-addFeaturedRelease(data: Omit<FeaturedReleaseData, 'siteAddress'>): Promise<HashResponse>
+addFeaturedRelease(data: AddInput<FeaturedReleaseData>): Promise<HashResponse>
 ```
 
 Creates a `FeaturedRelease` to highlight an existing `Release`.
@@ -178,10 +195,10 @@ Creates a `FeaturedRelease` to highlight an existing `Release`.
 ### `editFeaturedRelease()`
 
 ```typescript
-editFeaturedRelease(data: FeaturedReleaseData): Promise<HashResponse>
+editFeaturedRelease(data: EditInput<FeaturedReleaseData>): Promise<HashResponse>
 ```
 
-Updates an existing `FeaturedRelease`. The `id` must be present in the `data`.
+Updates an existing `FeaturedRelease`. The `id` must be present, and core properties (`postedBy`, `siteAddress`) cannot be changed.
 
 ### `deleteFeaturedRelease()`
 
@@ -202,7 +219,7 @@ Methods for managing federation relationships. These operations require `ADMIN` 
 ### `addSubscription()`
 
 ```typescript
-addSubscription(data: BaseData): Promise<HashResponse>
+addSubscription(data: AddInput<SubscriptionData>): Promise<HashResponse>
 ```
 
 Subscribes to another `Site`, initiating federation.
@@ -211,12 +228,12 @@ Subscribes to another `Site`, initiating federation.
 
 | Parameter | Type       | Description                                                 |
 |-----------|------------|-------------------------------------------------------------|
-| `data`    | `BaseData` | An object where `siteAddress` is the target site to follow. |
+| `data`    | `AddInput<SubscriptionData>`   | An object with the subscription properties. `SubscriptionData` is `{ to: string }` |
 
 ### `deleteSubscription()`
 
 ```typescript
-deleteSubscription(data: { id?: string; siteAddress?: string }): Promise<IdResponse>
+deleteSubscription(data: { id?: string; to?: string }): Promise<IdResponse>
 ```
 
 Unsubscribes from a `Site`, stopping federation and purging its content.
@@ -225,7 +242,7 @@ Unsubscribes from a `Site`, stopping federation and purging its content.
 
 | Parameter | Type     | Description                                                          |
 |-----------|----------|----------------------------------------------------------------------|
-| `data`    | `object` | An object containing either the `id` or the `siteAddress` to remove. |
+| `data`    | `object` | An object containing either the subscription `id` or the target site's `to` address to remove. |
 
 ### `getSubscriptions()`
 
@@ -278,7 +295,6 @@ Revokes a user's role from the active `Site`.
 #### Returns
 
 A `Promise` resolving to a `BaseResponse` object indicating success or failure.
-
 
 ## Common Response Objects
 

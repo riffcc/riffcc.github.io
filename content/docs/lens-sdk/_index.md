@@ -1,8 +1,10 @@
-+++
+---
 date = '2025-07-22T04:50:31+02:00'
 draft = false
 title = 'Lens SDK'
-+++
+sidebar:
+    open: true
+---
 
 ## Overview
 
@@ -33,7 +35,7 @@ The design of the Lens SDK is guided by several foundational principles:
   * **Live Pub/Sub Updates:** Ensures real-time data synchronization between federated sites.
   * **Stateful Connection Management:** Intelligently manages the lifecycle of federated connections, including automated data cleanup upon unsubscription.
 
-* **High-Level Service API (`LensClient`):** A developer-friendly interface that serves as the sole entry point for application integration. It provides a stable, promise-based API that abstracts away all underlying P2P complexity.
+* **High-Level Service API (`LensService`):** A developer-friendly interface that serves as the sole entry point for application integration. It provides a stable, promise-based API that abstracts away all underlying P2P complexity.
 
 * **Extensible Schemas:** All data structures are defined with strongly-typed schemas, ensuring data consistency and integrity across the network while remaining extensible for future requirements.
 
@@ -51,5 +53,5 @@ The Lens SDK is ideal for developers and organizations building:
 To begin working with the Lens SDK, we recommend reviewing the following sections:
 
 1. **[Core Concepts](/docs/lens-sdk/core-concepts):** A detailed explanation of the `Site` program, Federation, and the architectural principles of the SDK.
-2. **[API Reference](/docs/lens-sdk/api-reference):** Comprehensive documentation for the `LensClient`, its methods, and data types.
+2. **[API Reference](/docs/lens-sdk/api-reference):** Comprehensive documentation for the `LensService`, its methods, and data types.
 3. **[Examples](https://github.com/your-repo/examples):** A repository of sample applications demonstrating the integration and use of the SDK in various scenarios.

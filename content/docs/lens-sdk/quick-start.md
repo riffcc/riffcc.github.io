@@ -71,6 +71,7 @@ await lens.openSite(mySite);
 const siteAddress = lens.siteProgram.address;
 console.log(`Site created and opened successfully! Address: ${siteAddress}`);
 ```
+>Note: The lens.peerbit and lens.siteProgram properties are only populated after lens.init() and lens.openSite() have been successfully called, respectively.
 
 ### Step 4: Adding Content (Creating a `Release`)
 
@@ -82,7 +83,6 @@ Now that a `Site` is open, you can perform actions as the administrator. Let's a
 console.log("Adding a new Release to the Site...");
 
 const releaseData = {
-  postedBy: myPublicKey,
   name: "Hello, Decentralized World!",
   categoryId: "posts", // Assuming a 'posts' category exists or will be created
   contentCID: "bafybeigdyrzt5sfp7vu572pausrk236q2762rqcbqcnwqwixituoxuejm4" // Example CID
