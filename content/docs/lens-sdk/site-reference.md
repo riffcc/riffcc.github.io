@@ -11,16 +11,19 @@ This document provides a detailed reference for the data schemas that constitute
 
 All data objects submitted to the `LensService` for creation or editing should conform to the structures described below.
 
-#### Common Base Fields (`BaseData`)
+#### Common Document Properties
 
-Most schemas within the `Site` program inherit from a common base structure. When you create a new content item (like a `Release`), the `id`, `postedBy`, and `siteAddress` fields are typically handled automatically by the `LensService`.
+While there is no rigid base class, most documents share a set of common, fundamental properties. When creating a new content item (like a `Release`), the `id`, `postedBy`, and `siteAddress` fields are automatically handled by the `LensService`.
 
-| Field         | Type          | Description                                                                                              |
-|---------------|---------------|----------------------------------------------------------------------------------------------------------|
-| `id`          | `string`      | A unique identifier for the document. Usually a UUID, generated automatically on creation.               |
-| `postedBy`    | `PublicSignKey`| The cryptographic public key of the user who created the document. Automatically set to the current user. |
-| `siteAddress` | `string`      | The unique address of the `Site` where this document was originally created. Automatically set.            |
+| Field         | Type                          | Description                                                                                                                                                             |
+|---------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `id`          | `string`                      | A unique identifier for the document. Usually a UUID, generated automatically on creation. Required when editing an existing document.                                     |
+| `postedBy`    | `PublicSignKey` or `Uint8Array` | The cryptographic public key of the identity associated with the document. When creating content, this is automatically set to the current user unless specified otherwise. |
+| `siteAddress` | `string`                      | The unique address of the `Site` where this document was originally created. This is always set by the service and is immutable.                                         |
 
+> **Note on Immutability:** The `postedBy` and `siteAddress` fields are considered immutable. Once a document is created, these values cannot be changed via an `edit` operation. The SDK enforces this rule at the service layer.
+
+---
 
 #### 1. `Release`
 
@@ -33,6 +36,7 @@ The `Release` is the primary content object. It represents a single, publishable
 | `contentCID`   | `string` | **Yes**  | The IPFS Content Identifier (CID) of the main data file(s) for this release. |
 | `thumbnailCID` | `string` | No       | The IPFS CID for a thumbnail or cover image associated with the release.  |
 | `metadata`     | `string` | No       | A JSON string containing additional, category-specific metadata.          |
+
 
 #### 2. `ContentCategory`
 
@@ -58,16 +62,13 @@ A `FeaturedRelease` acts as a "pin" or "shortcut" to an existing `Release`, allo
 
 #### 4. `Subscription`
 
-A `Subscription` represents a unilateral "follow" action, forming the basis of federation. When a `Subscription` is created, the `FederationManager` begins syncing content from the target `siteAddress`.
+A `Subscription` represents a unilateral "follow" action, forming the basis of federation. When a `Subscription` is created, the `FederationManager` begins syncing content from the target `Site`.
 
-This schema only uses the `BaseData` fields. The key information is in `siteAddress`.
-
-| Field         | Type     | Required | Description                                                            |
-|---------------|----------|:--------:|------------------------------------------------------------------------|
-| `siteAddress` | `string` | **Yes**  | The full address of the `Site` program being subscribed to.            |
+| Field         | Type     | Required | Description                                                                                               |
+|---------------|----------|:--------:|-----------------------------------------------------------------------------------------------------------|
+| `to`          | `string` | **Yes**  | The full, unique address of the remote `Site` program being subscribed to.                                 |
 
 >Note: The `id` for a subscription is deterministically generated from a combination of the subscriber's and the target site's addresses to prevent duplicate subscriptions.
-
 
 #### 5. `BlockedContent`
 

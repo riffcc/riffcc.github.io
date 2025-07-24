@@ -33,42 +33,61 @@ graph TD
 
 ## 2. The `Site` Program: A Sovereign Digital Entity
 
-The central construct in the Lens ecosystem is the `Site`. Conceptually, a `Site` is a sovereign, addressable, and self-contained digital space. It functions as a decentralized application instance, complete with its own databases and access control lists.
+The central construct in the Lens ecosystem is the `Site`. Conceptually, a `Site` is a sovereign, addressable, and self-contained digital space. It functions as a decentralized application instance, complete with its own databases and access control system.
 
-### Key Characteristics of a `Site`:
+### Key Characteristics of a `Site`
 
-* **Unique, Verifiable Address:** Every `Site` is identified by a permanent, cryptographic address derived from its owner's public key. This address is used to locate, open, and interact with the `Site` on the network.
-* **Structured Data Stores:** A `Site` is not a monolithic database. It is a collection of discrete, purpose-built data stores, each governed by its own schema. This includes stores for `Releases`, `ContentCategories`, `Subscriptions`, and more. This structured approach ensures data integrity and organizational clarity.
-* **Explicit Permissions:** Access to a `Site` is not public by default. All write permissions are explicitly granted by an `Administrator` through cryptographically verifiable Access Control Lists (ACLs). This "default-deny" posture is fundamental to the security model.
+* **Unique, Verifiable Address:** Every `Site` is identified by a permanent, cryptographic address derived from its owner's public key and its initial parameters. This address is used to locate, open, and interact with the `Site` on the network.
+* **Structured Data Stores:** A `Site` is a collection of discrete, purpose-built data stores for `Releases`, `ContentCategories`, `Subscriptions`, and more. This structured approach ensures data integrity and organizational clarity.
+* **Explicit Permissions:** Access to a `Site` is not public by default. All write permissions are explicitly granted by an **Administrator** through a robust Role-Based Access Control (RBAC) system.
 
 ## 3. The Federation Model: Principled Data Exchange
 
-Federation is the process by which independent `Site` instances share data with one another. The Lens SDK implements a principled, subscription-based federation model to ensure that all data exchange is intentional and secure.
+Federation is the process by which independent `Site` instances share data. The Lens SDK implements a principled, subscription-based model to ensure that all data exchange is intentional and secure.
 
-### The Federation Lifecycle:
+### The Federation Lifecycle
 
-1. **Explicit Subscription:** The process is always initiated by a `Site` Administrator. To federate with another `Site`, an administrator must create a `Subscription` record containing the target `Site`'s address. This action is a deliberate declaration of trust.
+1. **Explicit Subscription:** The process is initiated by a user with `subscription:manage` permission (typically a `Moderator` or `Admin`). To federate, they create a `Subscription` record containing the target `Site`'s address. This action is a deliberate declaration of trust.
 
 2. **State Synchronization:** Upon the creation of a `Subscription`, the `FederationManager` performs two types of synchronization:
-    * **Historical Sync:** A one-time process that connects to the remote `Site` and replicates its existing public content (e.g., `Releases`). This ensures that the new subscriber has a complete historical view of the federated content.
-    * **Live Sync:** The manager subscribes to the remote `Site`'s dedicated pub/sub topic. This creates a persistent, real-time communication channel for receiving immediate updates as new content is published.
+    * **Historical Sync:** A one-time process that connects to the remote `Site` and replicates its existing public content (e.g., `Releases`).
+    * **Live Sync:** The manager subscribes to the remote `Site`'s dedicated pub/sub topic, creating a persistent, real-time communication channel for immediate updates.
 
-3. **Data Provenance:** All data received via federation is immutable and retains the cryptographic signature of its original author and the address of its originating `Site`. This guarantees that the source of all content can be verified, preventing data spoofing.
+3. **Data Provenance:** All data received via federation is immutable and retains the cryptographic signature of its original author and the address of its originating `Site`. This guarantees that the source of all content can be verified.
 
-4. **Lifecycle Termination:** If a `Subscription` is deleted, the `FederationManager` performs a cleanup operation. It terminates the live pub/sub connection and purges all data associated with the unsubscribed `Site` from its local databases. This ensures that the local state accurately reflects the current set of trusted federated partners.
+4. **Lifecycle Termination:** If a `Subscription` is deleted, the `FederationManager` performs a cleanup operation, purging all data associated with the unsubscribed `Site` from its local databases.
 
-## 4. The Access Control System
+## 4. The Access Control System (RBAC)
 
-Security and permissioning are integral to the `Site` program. The system is built on a clear, role-based access control (RBAC) model. A user's role is determined by their cryptographic identity's presence within the `Site`'s dedicated access control stores.
+Security is integral to the `Site` program. The system is built on a robust and secure **Role-Based Access Control (RBAC)** model, managed by a dedicated internal `RoleBasedccessController`. This controller is the ultimate authority for all actions within a `Site`.
 
-### Defined Roles:
+### The RBAC Components
 
-* **Administrator:** This role grants comprehensive control over a `Site`. Administrators can manage all content, add or remove other `Administrators` and `Members`, and modify site-level configurations. The initial creator of a `Site` is its first `Administrator`.
+* **Administrators (`TrustedNetwork`):** At the top level is a `TrustedNetwork` of administrators. Any user whose public key is in this network is considered an **Admin**. Admins have universal permissions and are the only users who can manage the RBAC system itself (e.g., create new roles, assign roles to users, or add other Admins). The initial creator of a `Site` is its first `Admin`.
 
-* **Member:** This role is for trusted contributors. `Members` are granted the ability to create new content within the `Site` (e.g., publishing a `Release`). However, they cannot modify or delete content created by others, nor can they alter the site's permissions.
+* **Roles:** A `Role` is a named collection of specific permissions. A `Site` is initialized with a set of default roles, and Admins can create new custom roles as needed.
 
-* **Guest:** This is the default role for any user who is not an `Administrator` or a `Member`. `Guests` typically have read-only access to public information within a `Site` and cannot perform any write operations.
+* **Permissions:** A `Permission` is a granular string that represents a specific action, typically in the format `"resource:action"` (e.g., `"release:delete"`).
 
-* **Federated Peer (Implicit Role):** When data arrives from a subscribed `Site`, the system implicitly trusts it. The permission checks for this federated data are based on the existence of a valid `Subscription` record, effectively treating the remote site as a trusted entity for the purpose of data ingestion.
+* **Assignments:** An `Assignment` is a verifiable link between a user's public key and a `Role`. A user gains permissions by virtue of the roles they are assigned.
 
-This conceptual framework provides the foundation for building secure, scalable, and interoperable applications with the Lens SDK. For details on how to implement these concepts, please refer to the **API Reference**.
+### Default Roles and Permissions Table
+
+A `Site` comes with a clear set of default roles, providing a sensible permission structure out of the box. An **Admin** can perform all actions listed below.
+
+| Action / Permission (`resource:action`) | Moderator | Member | Guest | Description                                                              |
+|-----------------------------------------|:---------:|:------:|:-----:|--------------------------------------------------------------------------|
+| **`release:create`**                    | ✅        | ✅     | ❌    | Can publish new `Release` documents.                                     |
+| **`release:edit:own`**                  | ✅        | ✅     | ❌    | Can edit `Release` documents they personally posted.                     |
+| **`release:edit:any`**                  | ✅        | ❌     | ❌    | Can edit `Release` documents posted by *any* user on the site.           |
+| **`release:delete`**                    | ✅        | ❌     | ❌    | Can delete any `Release` from the site.                                  |
+| **`featured:manage`**                   | ✅        | ❌     | ❌    | Can create, edit, or delete `FeaturedRelease` entries.                   |
+| **`category:manage`**                   | ✅        | ❌     | ❌    | Can create, edit, or delete `ContentCategory` documents.                 |
+| **`blocklist:manage`**                  | ✅        | ❌     | ❌    | Can create or delete `BlockedContent` entries.                           |
+| **`subscription:manage`**               | ✅        | ❌     | ❌    | Can subscribe to or unsubscribe from other sites.                        |
+
+* **Guest (Implicit Role):** This is the default status for any user who is not an Admin and has not been assigned any roles. `Guests` have read-only access and cannot perform any write operations.
+
+### Federation and Permissions
+
+The RBAC model extends intelligently to federated content. While trust is primarily based on the subscription, the Lens SDK provides a powerful override: **a local `Admin` or `Moderator` can always act on federated content** (e.g., delete a stale post from an unsubscribed site). This ensures that local site owners maintain ultimate control over the content stored in their databases.

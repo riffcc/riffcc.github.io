@@ -15,7 +15,7 @@ The `LensService` class provides a high-level, asynchronous interface for all SD
 
 ```typescript
 new LensService(options?: {
-  client?: ProgramClient;
+  peerbit?: ProgramClient;
   debug?: boolean;
   customPrefix?: string;
 })
@@ -23,12 +23,10 @@ new LensService(options?: {
 
 Initializes a new instance of the service.
 
-#### Parameters
-
 | Parameter      | Type            | Optional | Description                                                                                             |
 |----------------|-----------------|:--------:|---------------------------------------------------------------------------------------------------------|
 | `options`      | `object`        | **Yes**  | Configuration for the service instance.                                                                 |
-| `options.client`| `ProgramClient` | **Yes**  | An externally managed Peerbit client. If provided, `init()` and `stop()` will not affect its lifecycle. |
+| `options.peerbit`| `ProgramClient` | **Yes**  | An externally managed Peerbit client. If provided, `init()` and `stop()` will not affect its lifecycle. |
 | `options.debug`| `boolean`       | **Yes**  | Enables verbose diagnostic logging to the console. Defaults to `false`.                                   |
 | `options.customPrefix`| `string` | **Yes**  | Sets a custom prefix for log messages. Defaults to `'[LensService]'`.                                     |
 
@@ -45,8 +43,6 @@ init(directory?: string): Promise<void>
 ```
 
 Initializes and starts a new, internally managed Peerbit client. This method must be called before any other operations if the service was not constructed with an external client.
-
-#### Parameters
 
 | Parameter   | Type     | Optional | Description                                                                                |
 |-------------|----------|:--------:|--------------------------------------------------------------------------------------------|
@@ -71,8 +67,6 @@ openSite(
 
 Opens a `Site` program, making it the active context for all subsequent API calls.
 
-#### Parameters
-
 | Parameter         | Type                | Optional | Description                                                                                                |
 |-------------------|---------------------|:--------:|------------------------------------------------------------------------------------------------------------|
 | `siteOrAddress`   | `Site \| string`      | No       | To create a new `Site`, pass a `new Site(rootTrust)` instance. To open an existing one, pass its address.   |
@@ -84,26 +78,32 @@ Opens a `Site` program, making it the active context for all subsequent API call
 
 ## Account and Status Methods
 
-Methods for retrieving information about the current user and `Site`.
+Methods for retrieving information about the current user.
 
 ### `getAccountStatus()`
 
 ```typescript
-getAccountStatus(options?: { cached?: boolean }): Promise<AccountType>
+getAccountStatus(): Promise<AccountStatusResponse>
 ```
 
-Determines the permission level of the current user (`ADMIN`, `MEMBER`, or `GUEST`) for the active `Site`.
+Determines the full permission status of the current user for the active `Site`. This is the primary method for fetching the necessary information to render a user interface tailored to their capabilities.
 
-#### Parameters
+```typescript
+interface AccountStatusResponse {
+  isAdmin: boolean;      // True if the user is a top-level administrator
+  roles: string[];       // An array of role names assigned to the user (e.g., ["moderator", "member"])
+  permissions: string[]; // A flattened, unique list of all permissions granted by the user's roles
+}
+```
 
-| Parameter         | Type      | Optional | Description                                                                                  |
-|-------------------|-----------|:--------:|----------------------------------------------------------------------------------------------|
-| `options`         | `object`  | **Yes**  | Configuration options.                                                                       |
-| `options.cached`  | `boolean` | **Yes**  | If `true`, may return a cached result for performance. Defaults to `true`. Set to `false` for a fresh check. |
+---
 
-#### Returns
+### API Input Types
 
-A `Promise` that resolves to an `AccountType` enum value.
+To simplify interactions, the `LensService` uses two primary input patterns for creating and editing documents.
+
+* `AddInput<T>`: Used for creating new documents (e.g., `addRelease`). You only need to provide the core data for the document type `T`. The `siteAddress` is always handled by the service. The `postedBy` field is optional; if omitted, it defaults to the service's current identity.
+* `EditInput<T>`: Used for updating existing documents (e.g., `editRelease`). This requires the full document data, including the `id` of the document to be updated, its `postedBy` key, and its `siteAddress`. The service will verify that `postedBy` and `siteAddress` have not been changed.
 
 ---
 
@@ -114,26 +114,29 @@ Methods for creating and managing the primary content type, `Release`.
 ### `addRelease()`
 
 ```typescript
-addRelease(data: Omit<ReleaseData, 'siteAddress'>): Promise<HashResponse>
+addRelease(data: AddInput<ReleaseData>): Promise<HashResponse>
 ```
 
-Creates and saves a new `Release` document. Automatically populates `id`, `postedBy`, and `siteAddress`.
+Creates and saves a new `Release` document. Requires the user to have a role with the `release:create` permission (e.g., `Member`, `Moderator`, `Admin`).
 
-#### Parameters
-
-| Parameter | Type          | Description                                                    |
-|-----------|---------------|----------------------------------------------------------------|
-| `data`    | `ReleaseData` | An object with the release properties (`name`, `categoryId`, etc.). |
-
-#### Returns
-
-A `Promise` resolving to a `HashResponse` object.
+| Parameter | Type                | Description                                                                                             |
+|-----------|---------------------|---------------------------------------------------------------------------------------------------------|
+| `data`    | `AddInput<ReleaseData>` | An object with the release properties (`name`, `categoryId`, etc.). `postedBy` is optional. |
 
 ### `editRelease()`
 
 ```typescript
-editRelease(data: ReleaseData): Promise<HashResponse>
+editRelease(data: EditInput<ReleaseData>): Promise<HashResponse>
 ```
+
+Updates an existing `Release`. The required permission depends on the action:
+
+* A user with the `release:edit:own` permission can edit a release where they are the `postedBy`.
+* A user with the `release:edit:any` permission can edit any release.
+
+| Parameter | Type                | Description                                                                                                                               |
+|-----------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `data`    | `EditInput<ReleaseData>` | The full `Release` data, including the `id` of the document to update. The service will reject the edit if `postedBy` or `siteAddress` are modified. |
 
 Updates an existing `Release`. The `data` object must include the `id`. Requires `ADMIN` privileges.
 
@@ -143,7 +146,7 @@ Updates an existing `Release`. The `data` object must include the `id`. Requires
 deleteRelease(id: string): Promise<IdResponse>
 ```
 
-Deletes a `Release` by its ID. Requires `ADMIN` privileges.
+Deletes a `Release` by its ID. Requires the `release:delete` permission (e.g., `Moderator`, `Admin`).
 
 ### `getRelease()`
 
@@ -165,12 +168,12 @@ Retrieves an array of `Release` documents.
 
 ## Featured Content Management
 
-Methods for managing `FeaturedRelease` entries. These operations require `ADMIN` privileges.
+Methods for managing `FeaturedRelease` entries. These operations require a role with the `featured:manage` permission (e.g., `Moderator`, `Admin`).
 
 ### `addFeaturedRelease()`
 
 ```typescript
-addFeaturedRelease(data: Omit<FeaturedReleaseData, 'siteAddress'>): Promise<HashResponse>
+addFeaturedRelease(data: AddInput<FeaturedReleaseData>): Promise<HashResponse>
 ```
 
 Creates a `FeaturedRelease` to highlight an existing `Release`.
@@ -178,10 +181,10 @@ Creates a `FeaturedRelease` to highlight an existing `Release`.
 ### `editFeaturedRelease()`
 
 ```typescript
-editFeaturedRelease(data: FeaturedReleaseData): Promise<HashResponse>
+editFeaturedRelease(data: EditInput<FeaturedReleaseData>): Promise<HashResponse>
 ```
 
-Updates an existing `FeaturedRelease`. The `id` must be present in the `data`.
+Updates an existing `FeaturedRelease`. The `id` must be present, and core properties (`postedBy`, `siteAddress`) cannot be changed.
 
 ### `deleteFeaturedRelease()`
 
@@ -197,35 +200,31 @@ Deletes a `FeaturedRelease` by its ID.
 
 ## Federation (Subscription) Management
 
-Methods for managing federation relationships. These operations require `ADMIN` privileges.
+Methods for managing federation relationships. These operations require a role with the `subscription:manage` permission (e.g., `Moderator`, `Admin`).
 
 ### `addSubscription()`
 
 ```typescript
-addSubscription(data: BaseData): Promise<HashResponse>
+addSubscription(data: AddInput<SubscriptionData>): Promise<HashResponse>
 ```
 
 Subscribes to another `Site`, initiating federation.
 
-#### Parameters
-
 | Parameter | Type       | Description                                                 |
 |-----------|------------|-------------------------------------------------------------|
-| `data`    | `BaseData` | An object where `siteAddress` is the target site to follow. |
+| `data`    | `AddInput<SubscriptionData>`   | An object with the subscription properties. `SubscriptionData` is `{ to: string }` |
 
 ### `deleteSubscription()`
 
 ```typescript
-deleteSubscription(data: { id?: string; siteAddress?: string }): Promise<IdResponse>
+deleteSubscription(data: { id?: string; to?: string }): Promise<IdResponse>
 ```
 
 Unsubscribes from a `Site`, stopping federation and purging its content.
 
-#### Parameters
-
 | Parameter | Type     | Description                                                          |
 |-----------|----------|----------------------------------------------------------------------|
-| `data`    | `object` | An object containing either the `id` or the `siteAddress` to remove. |
+| `data`    | `object` | An object containing either the subscription `id` or the target site's `to` address to remove. |
 
 ### `getSubscriptions()`
 
@@ -235,50 +234,47 @@ getSubscriptions(options?: SearchOptions): Promise<Subscription[]>
 
 Retrieves a list of all current `Subscription` documents.
 
----
-
 ## Access Control Management
 
-Methods for managing user permissions on the active `Site`. These operations require `ADMIN` privileges.
+Methods for managing user permissions on the active `Site`. These operations are privileged and can **only be performed by an Administrator**.
 
-### `grantAccess()`
-
-```typescript
-grantAccess(accountType: AccountType, publicKey: string): Promise<BaseResponse>
-```
-
-Grants a specific role (`ADMIN` or `MEMBER`) to a user for the active `Site`.
-
-#### Parameters
-
-| Parameter     | Type          | Description                                                                 |
-|---------------|---------------|-----------------------------------------------------------------------------|
-| `accountType` | `AccountType` | The role to grant (`AccountType.ADMIN` or `AccountType.MEMBER`).            |
-| `publicKey`   | `string`      | The string-encoded public key of the user to grant access to.               |
-
-#### Returns
-
-A `Promise` resolving to a `BaseResponse` object indicating success or failure.
-
-### `revokeAccess()`
+### `addAdmin()`
 
 ```typescript
-revokeAccess(accountType: AccountType, publicKey: string): Promise<BaseResponse>
+addAdmin(publicKey: string | PublicSignKey): Promise<BaseResponse>
 ```
 
-Revokes a user's role from the active `Site`.
+Promotes another user to be a full Administrator, adding them to the site's root `TrustedNetwork`.
 
-#### Parameters
+| Parameter   | Type                   | Description                                                |
+|-------------|------------------------|------------------------------------------------------------|
+| `publicKey` | `string \| PublicSignKey` | The public key of the user to promote.                     |
 
-| Parameter     | Type          | Description                                                                                             |
-|---------------|---------------|---------------------------------------------------------------------------------------------------------|
-| `accountType` | `AccountType` | The role to revoke. Revoking `ADMIN` also revokes the `MEMBER` role.                                      |
-| `publicKey`   | `string`      | The string-encoded public key of the user whose access is being revoked.                                |
+### `assignRole()`
 
-#### Returns
+```typescript
+assignRole(publicKey: string | PublicSignKey, roleId: string): Promise<BaseResponse>
+```
 
-A `Promise` resolving to a `BaseResponse` object indicating success or failure.
+Assigns a specific role to a user.
 
+| Parameter   | Type                   | Description                                                                 |
+|-------------|------------------------|-----------------------------------------------------------------------------|
+| `publicKey` | `string \| PublicSignKey` | The public key of the user.                                                 |
+| `roleId`    | `string`               | The string identifier of the role to assign (e.g., `"member"`, `"moderator"`). |
+
+### `revokeRole()`
+
+```typescript
+revokeRole(publicKey: string | PublicSignKey, roleId: string): Promise<BaseResponse>
+```
+
+Revokes a specific role from a user.
+
+| Parameter   | Type                   | Description                                                                 |
+|-------------|------------------------|-----------------------------------------------------------------------------|
+| `publicKey` | `string \| PublicSignKey` | The public key of the user.                                                 |
+| `roleId`    | `string`               | The string identifier of the role to revoke.                                  |
 
 ## Common Response Objects
 
