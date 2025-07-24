@@ -1,9 +1,9 @@
 ---
-date = '2025-07-22T04:50:31+02:00'
-draft = false
-title = 'Lens SDK'
+date: '2025-07-22T04:50:31+02:00'
+draft: false
+title: 'Lens SDK'
 sidebar:
-    open: true
+  open: true
 ---
 
 ## Overview
@@ -28,7 +28,7 @@ The design of the Lens SDK is guided by several foundational principles:
 
 * **Turnkey Decentralized Application (`Site` Program):** The SDK includes a powerful and feature-complete P2P program, the `Site`. It provides out-of-the-box support for content releases, categories, featured items, and moderation tools.
 
-* **Role-Based Access Control (RBAC):** A clear, three-tier permission system (`Administrator`, `Member`, `Guest`) for fine-grained control over content creation, management, and site administration.
+* **Flexible Role-Based Access Control (RBAC):** A sophisticated, secure, and extensible permission system. It provides a clear hierarchy of default roles (`Admin`, `Moderator`, `Member`) and allows for the creation of custom roles with fine-grained permissions for precise control over content creation, management, and site administration.
 
 * **Automated Federation and Synchronization:** A sophisticated `FederationManager` handles all aspects of inter-site communication, including:
   * **Historical Data Sync:** Automatically back-fills content when a new subscription is established.
@@ -53,5 +53,5 @@ The Lens SDK is ideal for developers and organizations building:
 To begin working with the Lens SDK, we recommend reviewing the following sections:
 
 1. **[Core Concepts](/docs/lens-sdk/core-concepts):** A detailed explanation of the `Site` program, Federation, and the architectural principles of the SDK.
-2. **[API Reference](/docs/lens-sdk/api-reference):** Comprehensive documentation for the `LensService`, its methods, and data types.
-3. **[Examples](https://github.com/your-repo/examples):** A repository of sample applications demonstrating the integration and use of the SDK in various scenarios.
+2. **[Quick Start](/docs/lens-sdk/quick-start):** A step-by-step tutorial to get a basic application up and running.
+3. **[API Reference](/docs/lens-sdk/api-reference):** Comprehensive documentation for the `LensService`, its methods, and data types.

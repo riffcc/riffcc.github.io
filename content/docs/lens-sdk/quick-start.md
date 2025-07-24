@@ -5,7 +5,7 @@ title = 'Quick Start'
 weight = 1
 +++
 
-This guide provides a step-by-step walkthrough to get a basic application running with the Lens SDK. By the end of this guide, you will have initialized the service, created a new `Site`, added content, and retrieved it.
+This guide provides a step-by-step walkthrough to get a basic application running with the Lens SDK. By the end of this guide, you will have initialized the service, created a new `Site`, assigned a user role, added content, and retrieved it.
 
 ### Prerequisites
 
@@ -22,9 +22,7 @@ pnpm install @riffcc/lens-sdk
 
 ### Step 2: Initializing the `LensService`
 
-The `LensService` is the primary entry point for all SDK functionality. The first step in any application is to create an instance of the service and initialize its underlying P2P client.
-
-Create a new file, for example `main.ts`, and add the following code:
+The `LensService` is the primary entry point for all SDK functionality. The first step is to create an instance and initialize its underlying P2P client.
 
 ```typescript
 import { LensService } from '@riffcc/lens-sdk';
@@ -61,17 +59,18 @@ A `Site` is your decentralized content hub. To create a new one, you instantiate
 // 1. Get the public key of the current user from the initialized client.
 const myPublicKey = lens.peerbit.identity.publicKey;
 
-// 2. Create a new Site instance, making yourself the owner/admin.
+// 2. Create a new Site instance, making yourself the root administrator.
 const mySite = new Site(myPublicKey);
 
-// 3. Open the site. This registers it on the network.
+// 3. Open the site. This registers it on the network and creates default roles.
 console.log("Opening a new Site...");
 await lens.openSite(mySite);
 
 const siteAddress = lens.siteProgram.address;
 console.log(`Site created and opened successfully! Address: ${siteAddress}`);
 ```
->Note: The lens.peerbit and lens.siteProgram properties are only populated after lens.init() and lens.openSite() have been successfully called, respectively.
+
+>Note: The `lens.peerbit` and `lens.siteProgram` properties are only populated after `lens.init()` and `lens.openSite()` have been successfully called, respectively.
 
 ### Step 4: Adding Content (Creating a `Release`)
 
@@ -84,7 +83,7 @@ console.log("Adding a new Release to the Site...");
 
 const releaseData = {
   name: "Hello, Decentralized World!",
-  categoryId: "posts", // Assuming a 'posts' category exists or will be created
+  categoryId: "posts",
   contentCID: "bafybeigdyrzt5sfp7vu572pausrk236q2762rqcbqcnwqwixituoxuejm4" // Example CID
 };
 
@@ -113,58 +112,4 @@ allReleases.forEach(release => {
 });
 ```
 
-### Complete Example
-
-Here is the complete `main.ts` file for reference:
-
-```typescript
-import { LensService } from '@riffcc/lens-sdk';
-import { Site } from '@riffcc/lens-sdk/programs';
-
-async function main() {
-  console.log("Initializing Lens Service...");
-  const lens = new LensService({ debug: true });
-  await lens.init('./my-first-site-data');
-  console.log("Service Initialized.");
-
-  try {
-    const myPublicKey = lens.peerbit.identity.publicKey;
-    const mySite = new Site(myPublicKey);
-
-    console.log("Opening a new Site...");
-    await lens.openSite(mySite);
-    const siteAddress = lens.siteProgram.address;
-    console.log(`Site created and opened successfully! Address: ${siteAddress}`);
-
-    console.log("Adding a new Release to the Site...");
-    const releaseData = {
-      postedBy: myPublicKey,
-      name: "Hello, Decentralized World!",
-      categoryId: "posts",
-      contentCID: "bafybeigdyrzt5sfp7vu572pausrk236q2762rqcbqcnwqwixituoxuejm4"
-    };
-    const response = await lens.addRelease(releaseData);
-
-    if (response.success) {
-      console.log(`Release added successfully! ID: ${response.id}`);
-    } else {
-      console.error(`Failed to add release: ${response.error}`);
-    }
-
-    console.log("Retrieving all releases...");
-    const allReleases = await lens.getReleases();
-    console.log(`Found ${allReleases.length} release(s):`);
-    allReleases.forEach(release => {
-      console.log(`- ID: ${release.id}, Name: "${release.name}"`);
-    });
-
-  } finally {
-    await lens.stop();
-    console.log("Service Stopped.");
-  }
-}
-
-main().catch(console.error);
-```
-
-Congratulations! You have successfully created a decentralized `Site`, added content to it, and retrieved that content. From here, you can explore the [Core Concepts](./core-concepts) to understand the architecture in depth or consult the [API Reference](./api-reference) for a full list of available methods.
+Congratulations! You have successfully created a decentralized `Site`, managed permissions, added content, and retrieved it. From here, explore the [Core Concepts](./core-concepts) or consult the [API Reference](./api-reference).
