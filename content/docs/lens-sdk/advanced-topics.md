@@ -5,10 +5,72 @@ title = 'Advanced Topics'
 weight = 3
 +++
 
-
 This section covers advanced concepts and best practices for building robust, scalable, and secure applications with the Lens SDK. It is intended for developers who are already familiar with the topics covered in the Quick Start Guide and Core Concepts.
 
-### 1. Managing Peerbit Client Externally
+### 1. Using a Wallet for User Identity
+
+The most powerful feature for building dApps with the Lens SDK is the ability to use an external wallet (like MetaMask) as the user's identity. This allows users to sign for all actions directly, ensuring they are the true owners of their content.
+
+To do this, you need to create a Peerbit-compatible `Identity` object from an `ethers.js` signer.
+
+#### Step 1: Add Dependencies
+
+You will need `ethers` to interact with browser wallets.
+
+```bash
+pnpm install ethers
+```
+
+#### Step 2: Create the Identity from a Signer
+
+The SDK provides a utility function, `createIdentityFromSigner`, to make this easy. In a browser application, you would get the signer from the `window.ethereum` provider.
+
+```typescript
+import { ethers } from 'ethers';
+import { LensService, createIdentityFromSigner } from '@riffcc/lens-sdk';
+
+async function setupWithWallet() {
+  // In a browser environment:
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner();
+
+  // Create a Peerbit-compatible identity from the ethers signer.
+  const walletIdentity = await createIdentityFromSigner(signer);
+
+  // Instantiate the LensService, passing the custom identity.
+  const lens = new LensService({
+    identity: walletIdentity,
+    debug: true,
+  });
+
+  // Now, all calls like `lens.addRelease()` will trigger a signature
+  // request in the user's wallet.
+  await lens.init();
+  // ... rest of your application logic
+}
+```
+
+#### Step 3: Creating a Site with the Wallet Identity
+
+If the user is the first to create a `Site`, their wallet's public key must be used as the root administrator. You can pass the `walletIdentity.publicKey` directly to the `Site` constructor.
+
+```typescript
+import { Site } from '@riffcc/lens-sdk/programs';
+// ... assuming lens and walletIdentity are set up from the previous step
+
+// The user's wallet public key becomes the root of trust for the new Site.
+const rootAdminKey = walletIdentity.publicKey;
+const newSite = new Site(rootAdminKey);
+
+// Open the site. The user's wallet will sign for this action.
+await lens.openSite(newSite);
+
+console.log(`Site created successfully! Address: ${lens.siteProgram.address}`);
+```
+
+This pattern is fundamental for creating non-custodial applications where users have full control.
+
+### 2. Managing Peerbit Client Externally
 
 In some complex applications, you may need to manage the lifecycle of the Peerbit P2P client yourself, especially if your application uses other Peerbit programs alongside the `Site` program.
 
@@ -43,7 +105,7 @@ async function setup() {
 }
 ```
 
-### 2. Customizing Replication (`SiteArgs`)
+### 3. Customizing Replication (`SiteArgs`)
 
 By default, a `Site` program attempts to replicate its data stores with a low replication factor to save resources. For applications requiring higher availability or performance, you can provide custom replication arguments when opening a site.
 
@@ -71,7 +133,7 @@ await lens.openSite(site, { siteArgs: dedicatedPinningNodeArgs });
 
 For detailed replication options, refer to the Peerbit documentation on `ReplicationOptions`.
 
-### 3. Understanding Federation Performance
+### 4. Understanding Federation Performance
 
 The `FederationManager` is designed to be efficient, but in large-scale networks, it's helpful to understand its behavior:
 
@@ -79,7 +141,7 @@ The `FederationManager` is designed to be efficient, but in large-scale networks
 * **Live Sync:** Live updates via pub/sub are extremely lightweight. A `FederationUpdate` message only contains the cryptographic hashes and metadata of changed entries, not the full data, making real-time updates very fast.
 * **Network Topology:** Federation performance is dependent on the underlying libp2p network. For optimal performance, ensure that nodes (especially those that frequently federate with each other) are well-connected. You can use `peerbit.dial()` to manually establish connections between nodes if needed.
 
-### 4. Production-Level Content Moderation (`BlockedContent` and Denylists)
+### 5. Production-Level Content Moderation (`BlockedContent` and Denylists)
 
 The Lens SDK is designed with a powerful content moderation architecture that extends beyond simple in-app filtering to the core infrastructure. This section outlines the full vision, separating what is currently available from features that are in progress or planned for the future.
 
@@ -87,9 +149,9 @@ The Lens SDK is designed with a powerful content moderation architecture that ex
 
 It is important to distinguish between the two forms of content removal:
 
-*   **`deleteRelease()` (Logical Delete):** This is a standard feature. When an administrator calls `deleteRelease()`, it removes the `Release` document from the site's database. This is a "soft" or "logical" delete within the application's view. The underlying data file on IPFS is not immediately affected.
+* **`deleteRelease()` (Logical Delete):** This is a standard feature. When an administrator calls `deleteRelease()`, it removes the `Release` document from the site's database. This is a "soft" or "logical" delete within the application's view. The underlying data file on IPFS is not immediately affected.
 
-*   **`BlockedContent` (Hard Delete Foundation):** This schema is the foundation for a "hard delete" process. It is designed to create a permanent, verifiable record that a piece of content (identified by its CID) should be purged not just from the app, but from the entire storage infrastructure.
+* **`BlockedContent` (Hard Delete Foundation):** This schema is the foundation for a "hard delete" process. It is designed to create a permanent, verifiable record that a piece of content (identified by its CID) should be purged not just from the app, but from the entire storage infrastructure.
 
 #### The "Bad Bits" Moderation Pattern: Current State and Future Vision
 
@@ -97,15 +159,15 @@ The recommended pattern for robust moderation follows the principles of establis
 
 Here is the workflow, including the status of each component:
 
-1.  **Administrator Action:** An administrator identifies a piece of content by its IPFS Content Identifier (CID) that needs to be blocked.
+1. **Administrator Action:** An administrator identifies a piece of content by its IPFS Content Identifier (CID) that needs to be blocked.
 
-2.  **Double Hashing and Record Creation (In Progress):**
-    *   **Functionality:** To protect privacy, the original CID is **double-hashed** (e.g., SHA256(SHA256(CID))) before being stored. This prevents casual observers from identifying the content on the blocklist.
-    *   **Status:** The high-level `LensService` methods to perform this action (e.g., `blockContent()`) are **currently in progress**. This will provide a simple, secure way for administrators to add entries to the `blockedContent` store without needing direct program interaction.
+2. **Double Hashing and Record Creation (In Progress):**
+    * **Functionality:** To protect privacy, the original CID is **double-hashed** (e.g., SHA256(SHA256(CID))) before being stored. This prevents casual observers from identifying the content on the blocklist.
+    * **Status:** The high-level `LensService` methods to perform this action (e.g., `blockContent()`) are **currently in progress**. This will provide a simple, secure way for administrators to add entries to the `blockedContent` store without needing direct program interaction.
 
-3.  **Infrastructure Synchronization (Future Implementation):**
-    *   **Vision:** The long-term vision is for a trusted backend service or "Operator" to monitor the `Site`'s `blockedContent` store. This Operator will generate a standard denylist file from the stored hashes and distribute it to all core infrastructure.
-    *   **Status:** The implementation of this **Operator service is planned for the future**. When complete, it will enable the `blockedContent` store to act as a decentralized source of truth that can instruct IPFS nodes, clusters, and CDNs to refuse to serve and permanently delete blocked content.
+3. **Infrastructure Synchronization (Future Implementation):**
+    * **Vision:** The long-term vision is for a trusted backend service or "Operator" to monitor the `Site`'s `blockedContent` store. This Operator will generate a standard denylist file from the stored hashes and distribute it to all core infrastructure.
+    * **Status:** The implementation of this **Operator service is planned for the future**. When complete, it will enable the `blockedContent` store to act as a decentralized source of truth that can instruct IPFS nodes, clusters, and CDNs to refuse to serve and permanently delete blocked content.
 
 #### Summary of Moderation Features
 
@@ -118,7 +180,7 @@ Here is the workflow, including the status of each component:
 
 This roadmap provides a clear path from the current capabilities to a comprehensive, end-to-end content moderation system that is both powerful and privacy-preserving.
 
-### 5. Direct Program Interaction (For Advanced Use Cases)
+### 6. Direct Program Interaction (For Advanced Use Cases)
 
 While the `LensService` should be used for 99% of interactions, there may be rare cases where direct interaction with the `Site` program is necessary (e.g., in server-side administrative scripts).
 
@@ -144,4 +206,3 @@ if (site) {
 ```
 
 **Warning:** Bypassing the `LensService` means you lose its safety checks, error handling, and stable API contract. This should only be done when you have a deep understanding of the Peerbit framework and the internal logic of the `Site` program.
-

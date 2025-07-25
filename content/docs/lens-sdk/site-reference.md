@@ -37,17 +37,19 @@ The `Release` is the primary content object. It represents a single, publishable
 | `thumbnailCID` | `string` | No       | The IPFS CID for a thumbnail or cover image associated with the release.  |
 | `metadata`     | `string` | No       | A JSON string containing additional, category-specific metadata.          |
 
-
 #### 2. `ContentCategory`
 
-A `ContentCategory` defines a template for a type of content, including what metadata is expected. These are typically created by a `Site` administrator.
+A `ContentCategory` defines a template for a type of content, including what metadata is expected. These are typically created by a `Site` administrator or initialized from a default set.
 
 | Field          | Type     | Required | Description                                                                                                   |
 |----------------|----------|:--------:|---------------------------------------------------------------------------------------------------------------|
+| `categoryId`   | `string` | **Yes**  | A unique, human-readable string identifier (e.g., "movies", "tv-shows"). **This field is immutable.**         |
 | `displayName`  | `string` | **Yes**  | The human-readable name for the category (e.g., "TV Shows").                                                  |
-| `featured`     | `boolean`| **Yes**  | A flag to indicate if this category should be prominently displayed.                                          |
+| `featured`     | `boolean`| No       | A flag to indicate if this category should be prominently displayed. Defaults to `false`.                       |
 | `description`  | `string` | No       | A brief explanation of what content belongs in this category.                                                 |
-| `metadataSchema`| `string` | No       | A JSON string defining the structure of the `metadata` field for `Releases` in this category. See `deafults.ts` for examples. |
+| `metadataSchema`| `string` | No       | A JSON string defining the structure of the `metadata` field for `Releases` in this category. See [defaults.ts](https://github.com/riffcc/lens-sdk/blob/main/src/programs/site/defaults.ts) for examples. |
+
+> **Note on `categoryId` Immutability:** The `categoryId` field acts as a stable "business key". Once a category is created, this ID cannot be changed to ensure that all `Releases` linked to it remain valid. The SDK enforces this rule.
 
 #### 3. `FeaturedRelease`
 
