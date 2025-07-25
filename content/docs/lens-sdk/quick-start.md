@@ -70,7 +70,7 @@ const siteAddress = lens.siteProgram.address;
 console.log(`Site created and opened successfully! Address: ${siteAddress}`);
 ```
 
-> **Using a Custom Identity:** The example above uses the default identity automatically generated for the Peerbit node. For user-facing applications, the recommended approach is to use the user's own wallet (like MetaMask) as the identity. To learn how to implement this, please see the **Using a Wallet for User Identity** section in our [Advanced Topics guide](./advanced-topics).
+> **Using a Custom Identity:** The example above uses the default identity automatically generated for the Peerbit node. For user-facing applications, the recommended approach is to use the user's own wallet (like MetaMask) as the identity. To learn how to implement this, please see the **Using a Wallet for User Identity** section in our [Advanced Topics guide](/docs/lens-sdk/advanced-topics/#1-using-a-wallet-for-user-identity).
 
 ### Step 4: Initializing Site Content Categories
 
