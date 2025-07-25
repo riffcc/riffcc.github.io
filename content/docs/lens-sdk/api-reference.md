@@ -18,6 +18,7 @@ new LensService(options?: {
   peerbit?: ProgramClient;
   debug?: boolean;
   customPrefix?: string;
+  identity?: Identity<Secp256k1PublicKey>;
 })
 ```
 
@@ -29,6 +30,7 @@ Initializes a new instance of the service.
 | `options.peerbit`| `ProgramClient` | **Yes**  | An externally managed Peerbit client. If provided, `init()` and `stop()` will not affect its lifecycle. |
 | `options.debug`| `boolean`       | **Yes**  | Enables verbose diagnostic logging to the console. Defaults to `false`.                                   |
 | `options.customPrefix`| `string` | **Yes**  | Sets a custom prefix for log messages. Defaults to `'[LensService]'`.                                     |
+| `options.identity`| `Identity`   | **Yes**  | A custom, user-centric identity (e.g., from a wallet) to use for all signing operations. If omitted, the service uses the Peerbit node's default identity. |
 
 ---
 
@@ -86,7 +88,7 @@ Methods for retrieving information about the current user.
 getAccountStatus(): Promise<AccountStatusResponse>
 ```
 
-Determines the full permission status of the current user for the active `Site`. This is the primary method for fetching the necessary information to render a user interface tailored to their capabilities.
+Determines the full permission status of the current **active identity** (custom wallet or default node identity) for the active `Site`. This is the primary method for fetching the necessary information to render a user interface tailored to their capabilities.
 
 ```typescript
 interface AccountStatusResponse {
@@ -102,8 +104,9 @@ interface AccountStatusResponse {
 
 To simplify interactions, the `LensService` uses two primary input patterns for creating and editing documents.
 
-* `AddInput<T>`: Used for creating new documents (e.g., `addRelease`). You only need to provide the core data for the document type `T`. The `siteAddress` is always handled by the service. The `postedBy` field is optional; if omitted, it defaults to the service's current identity.
-* `EditInput<T>`: Used for updating existing documents (e.g., `editRelease`). This requires the full document data, including the `id` of the document to be updated, its `postedBy` key, and its `siteAddress`. The service will verify that `postedBy` and `siteAddress` have not been changed.
+* **`AddInput<T>`**: This is used for creating new documents (e.g., in `addRelease`). The type `AddInput<T>` is an alias for just `T`. You provide only the core data properties for the document you want to create. The `LensService` is responsible for automatically adding the required `id`, `postedBy`, and `siteAddress` fields.
+
+* **`EditInput<T>`**: This is used for updating existing documents (e.g., in `editRelease`). This type is an alias for `T & ImmutableProps`. You must provide the full data for the document, including the `id`, `postedBy`, and `siteAddress` of the existing document. The service will verify that the immutable properties (`postedBy` and `siteAddress`) have not been changed.
 
 ---
 
@@ -121,7 +124,7 @@ Creates and saves a new `Release` document. Requires the user to have a role wit
 
 | Parameter | Type                | Description                                                                                             |
 |-----------|---------------------|---------------------------------------------------------------------------------------------------------|
-| `data`    | `AddInput<ReleaseData>` | An object with the release properties (`name`, `categoryId`, etc.). `postedBy` is optional. |
+| `data`    | `AddInput<ReleaseData>` | An object with the release properties (`name`, `categoryId`, etc.). |
 
 ### `editRelease()`
 
@@ -195,6 +198,52 @@ deleteFeaturedRelease(id:string): Promise<IdResponse>
 Deletes a `FeaturedRelease` by its ID.
 
 *(Methods `getFeaturedRelease` and `getFeaturedReleases` follow the same pattern as their `Release` counterparts.)*
+
+---
+
+## Content Category Management
+
+Methods for managing `ContentCategory` documents. These operations require a role with the `category:manage` permission (e.g., `Moderator`, `Admin`).
+
+### `addContentCategory()`
+
+```typescript
+addContentCategory(data: AddInput<ContentCategoryData>): Promise<HashResponse>
+```
+
+Creates a new `ContentCategory`. The `categoryId` must be unique.
+
+### `editContentCategory()`
+
+```typescript
+editContentCategory(data: EditInput<ContentCategoryData>): Promise<HashResponse>
+```
+
+Updates an existing `ContentCategory`. The service will reject the update if immutable fields (`postedBy`, `siteAddress`, `categoryId`) are changed.
+
+### `deleteContentCategory()`
+
+```typescript
+deleteContentCategory(id: string): Promise<IdResponse>
+```
+
+Deletes a `ContentCategory` by its ID.
+
+### `getContentCategory()`
+
+```typescript
+getContentCategory(id: string): Promise<WithContext<ContentCategory> | undefined>
+```
+
+Retrieves a single `ContentCategory` by its ID.
+
+### `getContentCategories()`
+
+```typescript
+getContentCategories(options?: SearchOptions): Promise<WithContext<ContentCategory>[]>
+```
+
+Retrieves an array of all `ContentCategory` documents.
 
 ---
 

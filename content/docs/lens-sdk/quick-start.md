@@ -5,7 +5,7 @@ title = 'Quick Start'
 weight = 1
 +++
 
-This guide provides a step-by-step walkthrough to get a basic application running with the Lens SDK. By the end of this guide, you will have initialized the service, created a new `Site`, assigned a user role, added content, and retrieved it.
+This guide provides a step-by-step walkthrough to get a basic application running with the Lens SDK. By the end of this guide, you will have initialized the service, created a new `Site`, populated it with default content categories, added content, and retrieved it.
 
 ### Prerequisites
 
@@ -70,20 +70,33 @@ const siteAddress = lens.siteProgram.address;
 console.log(`Site created and opened successfully! Address: ${siteAddress}`);
 ```
 
->Note: The `lens.peerbit` and `lens.siteProgram` properties are only populated after `lens.init()` and `lens.openSite()` have been successfully called, respectively.
+> **Using a Custom Identity:** The example above uses the default identity automatically generated for the Peerbit node. For user-facing applications, the recommended approach is to use the user's own wallet (like MetaMask) as the identity. To learn how to implement this, please see the **Using a Wallet for User Identity** section in our [Advanced Topics guide](./advanced-topics).
 
-### Step 4: Adding Content (Creating a `Release`)
+### Step 4: Initializing Site Content Categories
 
-Now that a `Site` is open, you can perform actions as the administrator. Let's add your first piece of content.
+A new `Site` is empty by default. As the root administrator, you should initialize it with a set of `ContentCategory` documents. This is a one-time operation that populates the site with the necessary templates for posting content.
 
 ```typescript
 // Inside your main() function, after lens.openSite()
+
+console.log("Initializing site with default content categories...");
+// This is a privileged, direct interaction with the Site program.
+await lens.siteProgram.initializeDefaultContentCategories();
+console.log("Default categories initialized successfully.");
+```
+
+### Step 5: Adding Content (Creating a `Release`)
+
+Now that the `Site` has been initialized with categories, you can add content. Let's add your first `Release`, linking it to the default `"music"` category.
+
+```typescript
+// Inside your main() function, after initializing categories
 
 console.log("Adding a new Release to the Site...");
 
 const releaseData = {
   name: "Hello, Decentralized World!",
-  categoryId: "posts",
+  categoryId: "music", // Link to the 'music' category we just created
   contentCID: "bafybeigdyrzt5sfp7vu572pausrk236q2762rqcbqcnwqwixituoxuejm4" // Example CID
 };
 
@@ -96,7 +109,7 @@ if (response.success) {
 }
 ```
 
-### Step 5: Retrieving Content
+### Step 6: Retrieving Content
 
 Finally, let's verify that the content was saved by retrieving all releases from the site.
 
@@ -112,4 +125,4 @@ allReleases.forEach(release => {
 });
 ```
 
-Congratulations! You have successfully created a decentralized `Site`, managed permissions, added content, and retrieved it. From here, explore the [Core Concepts](./core-concepts) or consult the [API Reference](./api-reference).
+Congratulations! You have successfully created a decentralized `Site`, initialized it, managed permissions, added content, and retrieved it. From here, explore the [Core Concepts](./core-concepts) or consult the [API Reference](./api-reference).

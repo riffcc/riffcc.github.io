@@ -61,6 +61,14 @@ Federation is the process by which independent `Site` instances share data. The 
 
 Security is integral to the `Site` program. The system is built on a robust and secure **Role-Based Access Control (RBAC)** model, managed by a dedicated internal `RoleBasedccessController`. This controller is the ultimate authority for all actions within a `Site`.
 
+### Identity and Signing
+
+Every action that modifies a `Site` (like adding a release or assigning a role) must be cryptographically signed. The Lens SDK supports two models for this identity:
+
+1. **Default Node Identity:** If you initialize `LensService` without specifying a custom identity, it will use an auto-generated identity tied to the Peerbit node itself. This is suitable for server-side scripts or headless nodes where a single, consistent identity is desired.
+
+2. **Custom Wallet Identity:** For user-facing applications, the recommended approach is to provide a custom identity derived from the user's own wallet (e.g., MetaMask). When you instantiate `LensService` with this custom identity, **all subsequent actions are signed by the user's wallet**. This ensures that the user, not the application node, is the true owner and author of their content. This is the foundation of data sovereignty in the Lens SDK.
+
 ### The RBAC Components
 
 * **Administrators (`TrustedNetwork`):** At the top level is a `TrustedNetwork` of administrators. Any user whose public key is in this network is considered an **Admin**. Admins have universal permissions and are the only users who can manage the RBAC system itself (e.g., create new roles, assign roles to users, or add other Admins). The initial creator of a `Site` is its first `Admin`.
