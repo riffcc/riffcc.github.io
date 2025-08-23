@@ -1,15 +1,14 @@
 +++
-शीर्षक = "संपर्क"
-ड्राफ्ट = false
+title = 'हमसे संपर्क करें'
+draft = false
 +++
 
+आप ईमेल के माध्यम से [टीम@riff.cc] (मेलto: team@riff.cc) पर पहुंच सकते हैं।
 
-आप हमें [team@riff.cc](mailto:team@riff.cc) पर ईमेल के ज़रिए संपर्क कर सकते हैं।
+हम अपने समुदाय के लिए असंतोष और विकास के समन्वय का उपयोग करते हैं।
 
-हम अपने समुदाय और विकास के समन्वय के लिए Discord का इस्तेमाल करते हैं।
+[https://discord.gg/cvygqsfcrq] (https://discord.gg/cvygqsfcrq) पर अपने समुदाय के साथ आएं और कहें हाय।
 
-Discord पर हमारे समुदाय में [https://discord.gg/cvYgQSfCrQ](https://discord.gg/cvYgQSfCrQ) पर शामिल हों और नमस्ते कहें।
+साझेदारी और व्यापार पूछताछ के लिए, कृपया ईमेल [wings@riff.cc] (मेलto: wings@riff.cc)
 
-साझेदारी और व्यावसायिक पूछताछ के लिए, कृपया [wings@riff.cc](mailto:wings@riff.cc) पर ईमेल करें।
-
-कॉपीराइट संबंधी पूछताछ या शिकायतों के लिए, कृपया [dmca@riff.cc](mailto:dmca@riff.cc) पर संपर्क करें।
+कॉपीराइट पूछताछ या शिकायतों के लिए, कृपया [dmca@riff.cc] (मेलto:dmca@riff.cc) से संपर्क करें।
