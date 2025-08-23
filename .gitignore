@@ -1,5 +1,20 @@
+# Ignore Hugo public folder
 public/*
 
 # LLM stuff
 .claude
 .mcp.json
+
+# Ignore Go tarball
+go*.linux-amd64.tar.gz
+
+# Ignore backup config
+config.toml.save
+*.save
+
+# Ignore Go tarball
+go*.linux-amd64.tar.gz
+
+# Ignore backup config
+config.toml.save
+*.save
