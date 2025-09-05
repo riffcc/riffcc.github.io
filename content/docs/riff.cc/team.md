@@ -60,4 +60,8 @@ We have a small but passionate team of developers, engineers, and curators.
   tag="Design & UX"
   subtitle="Ehab is our in-house designer and UX expert. He works on the look and feel of Riff.CC and Lenses."
   >}}
+  {{< card title="Kai Hamilton"
+  tag="Automation Engineer"
+  subtitle="Kai works on automation and tooling such as Dragonfly."
+  >}}
 {{< /cards >}}
