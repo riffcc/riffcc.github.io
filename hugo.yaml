@@ -1,6 +1,8 @@
 ---
 params:
   description: 'Riff.CC is a platform for creativity. Build Libraries that Last.'
+  images:
+    - /images/riff.png
   footer:
     displayPoweredBy: false
   navbar:
