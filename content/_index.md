@@ -34,7 +34,7 @@ title = ''
     cooperative libraries<br />
     and platforms.</h1>
   <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
-    <a href="https://ftwc.xyz" style="
+    <a href="https://dev.riff.cc" style="
       display: inline-block;
       padding: 0.75rem 2rem;
       background-color: rgb(12, 21, 61);
