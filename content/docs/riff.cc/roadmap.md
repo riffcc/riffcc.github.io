@@ -48,16 +48,18 @@ Full public launch of Riff.CC
 
 {{% /steps %}}
 
+## 📅 2027
+
 {{% steps %}}
 
-### September 2026: User channels
+### January 2027: User channels
 
 Initial support for user channels and subscriptions
 
 * Create and run your own channel, which can show content from other channels or lenses
 * Support for subscriptions to channels, allowing users to follow and receive updates from their favorite channels
 
-### October 2026: Threshold funding
+### February 2027: Threshold funding
 
 Expand Riff.CC to support threshold funding
 
