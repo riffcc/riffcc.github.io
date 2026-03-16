@@ -25,12 +25,8 @@ We have a small but passionate team of developers, engineers, and curators.
   subtitle="Julien works on scalability and performance for the core Riff.CC platform."
   >}}
   {{< card title="Phoebe Sleet"
-  tag="TBA"
-  subtitle="More details to be announced soon."
-  >}}
-  {{< card title="Bill Schreckenstein"
-  tag="Partner Relations"
-  subtitle="Bill works on building partnerships with other organisations and projects."
+  tag="Strategy & Policy"
+  subtitle="Phoebe leads our external communications, stakeholder management and fundraising."
   >}}
   {{< card title="Preeti Aarya"
   tag="Web Developer"
@@ -44,21 +40,9 @@ We have a small but passionate team of developers, engineers, and curators.
   tag="P2P Librarian"
   subtitle="Evelyn is a researcher and content curator. She helps build and curate the Riff.CC Library."
   >}}
-  {{< card title="Roniel Contreras"
-  tag="Core Engineer"
-  subtitle="Roniel works on the core Riff.CC platform and UI/UX for Flagship, as well as development for our partners."
-  >}}
-  {{< card title="Gabriel Cruz"
-  tag="Distributed Systems Engineer"
-  subtitle="Gabriel works on our distributed filesystem and P2P architecture."
-  >}}
   {{< card title="Peter Raven"
   tag="Technical Execution"
   subtitle="Peter is a technical execution consultant. He helps us make sure we *deliver*."
-  >}}
-  {{< card title="Ehab Fayez"
-  tag="Design & UX"
-  subtitle="Ehab is our in-house designer and UX expert. He works on the look and feel of Riff.CC and Lenses."
   >}}
   {{< card title="Kai Hamilton"
   tag="Automation Engineer"
