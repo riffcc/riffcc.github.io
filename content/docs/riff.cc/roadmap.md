@@ -9,6 +9,24 @@ Here's what's coming up for Riff.CC:
 
 
 ## 📅 2026
+
+<div class="steps-completed">
+
+{{% steps %}}
+
+### March 2026: Flagship improvements
+
+Shipped in the latest Flagship releases
+
+* Search from any page
+* Codec badges to see what you're streaming
+* Neverust and Archivist integration
+* Relaunch of dev.riff.cc
+
+{{% /steps %}}
+
+</div>
+
 {{% steps %}}
 
 ### April 2026: Public beta

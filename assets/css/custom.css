@@ -152,11 +152,35 @@ code *, pre *, .font-mono * {
 }
 
 /* Hide step numbers in timeline/steps components */
-.steps {  
-  counter-reset: none !important;  
-}  
-  
-.steps h3::before {  
-  content: "" !important;  
-  counter-increment: none !important;  
+.steps {
+  counter-reset: none !important;
+}
+
+.steps h3::before {
+  content: "" !important;
+  counter-increment: none !important;
+}
+
+/* Completed steps - green styling */
+.steps-completed .steps {
+  border-color: #22c55e !important;
+}
+
+.steps-completed .steps h3::before {
+  content: "✓" !important;
+  background-color: #22c55e !important;
+  border-color: #22c55e !important;
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  line-height: 25px !important;
+}
+
+.dark .steps-completed .steps {
+  border-color: #4ade80 !important;
+}
+
+.dark .steps-completed .steps h3::before {
+  background-color: #16a34a !important;
+  border-color: #16a34a !important;
 }
