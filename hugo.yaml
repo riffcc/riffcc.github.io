@@ -62,16 +62,22 @@ languages:
     languageName: English
     weight: 1
     title: Riff.CC
+  hi:
+    languageName: हिन्दी
+    weight: 1
+    title: Riff.CC
   fr:
-    languageName: Francais (Coming soon)
+    languageName: Français
     languageCode: fr
     weight: 2
     title: Riff.CC
+    disabled: true
   es:
-    languageName: Español (Coming soon)
+    languageName: Español
     languageCode: es
     weight: 3
     title: Riff.CC
+    disabled: true
   pt:
     languageName: Português (Coming soon)
     languageCode: pt
